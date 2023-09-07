@@ -3,7 +3,6 @@ use strict;
 use Class::Struct;
 use Date::Simple ('date', 'today');
 use Text::CSV;
-#use Tie::Handle::CSV;
 use Data::Dumper::Simple;
 
 use constant SUNDAY => 0;
@@ -59,7 +58,6 @@ my $tutorial_start_date = Date::Simple->new('2021-09-13'); # Second week of term
 my $thanksgiving_holiday = Date::Simple->new('2021-10-11'); # Holiday
 
 # set some standard parameters:
-#my $lesson_entry_type = "Lecture";
 my $lesson_entry_type = "Class section - Lecture";
 
 # Load topics from CSV file:
@@ -92,9 +90,7 @@ print("\* Populating calendar:\n");
 # Beginning at start of term, walk through each day and populate sessions as the days match:
 my $topic_index = 0;
 for (my $date_index = $term_start_date; $date_index <= $term_end_date; $date_index++) {
-	#print("Processing $date_index.\n");
-
-	# Check if current date falls on reading week, weekend, or Good Friday:
+	# Check if current date falls on reading week, weekend, Family Day, Orange Shirt Day or Good Friday:
 	if (
 		(($date_index ge $reading_week_start_date) & ($date_index le $reading_week_end_date)) # reading week
 		|
@@ -136,11 +132,6 @@ for (my $date_index = $term_start_date; $date_index <= $term_end_date; $date_ind
 	 		$csv_out->print ($fh, $_) for \@lesson;
 			$topic_index++;
 		}
-
-		# Next populate tutorials and quizzes in order:
-		# (Left for future)
-		# Next populate design project deliverables in order:
-		# (Left for future)
 	}
 }
 # close the output file:
