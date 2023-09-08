@@ -1,0 +1,90 @@
+{
+    "CourseCode": "",
+    "TermDates": {
+        "term_start_date": "",
+        "term_end_date": "",
+        "reading_week_start": "",
+        "tutorial_start_date": "",
+        "lab_start_date": ""
+    },
+    "UnavailableDates": [],
+    "Lectures": [
+        {
+            "day_of_week": "",
+            "start_time": "9:30 AM",
+            "duration": "1:00",
+            "location": ""
+        },
+        {
+            "day_of_week": "",
+            "start_time": "9:30 AM",
+            "duration": "1:00",
+            "location": ""
+        },
+        {
+            "day_of_week": "",
+            "start_time": "9:30 AM",
+            "duration": "1:00",
+            "location": ""
+        }
+    ],
+    "Tutorials": [
+        {
+            "day_of_week": "",
+            "start_time": "9:30 AM",
+            "duration": "2:00",
+            "location": "",
+            "section": ""
+        }
+    ],
+    "Labs": [
+        {
+            "day_of_week": "",
+            "start_time": "9:30 AM",
+            "duration": "3:00",
+            "location": "",
+            "section": ""
+        },
+        {
+            "day_of_week": "",
+            "start_time": "9:30 AM",
+            "duration": "3:00",
+            "location": "",
+            "section": ""
+        },
+        {
+            "day_of_week": "",
+            "start_time": "9:30 AM",
+            "duration": "3:00",
+            "location": "",
+            "section": ""
+        }
+    ],
+    "LectureTopics": [
+        {
+            "Topic": "",
+            "Reference": ""
+        }
+    ],
+    "TutorialTopics": [
+        {
+            "Topic": "",
+            "Reference": ""
+        }
+    ],
+    "LabTopics": [
+        {
+            "Topic": "",
+            "Reference": ""
+        }
+    ],
+    "Deliverables": [
+        {
+            "name": "",
+            "due_date": "",
+            "type": "",
+            "weight": 0
+        }
+    ],
+    "DeliveryOption": 1
+}

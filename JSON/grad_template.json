@@ -1,0 +1,48 @@
+{
+    "CourseCode": "",
+    "TermDates": {
+        "term_start_date": "",
+        "term_end_date": "",
+        "reading_week_start": "",
+        "lab_start_date": ""
+    },
+    "UnavailableDates": [],
+    "Lectures": [
+        {
+            "day_of_week": "",
+            "start_time": "9:30 AM",
+            "duration": "2:00",
+            "location": ""
+        }
+    ],
+    "Labs": [
+        {
+            "day_of_week": "",
+            "start_time": "9:30 AM",
+            "duration": "3:00",
+            "location": "",
+            "section": ""
+        }
+    ],
+    "LectureTopics": [
+        {
+            "Topic": "",
+            "Reference": ""
+        }
+    ],
+    "LabTopics": [
+        {
+            "Topic": "",
+            "Reference": ""
+        }
+    ],
+    "Deliverables": [
+        {
+            "name": "",
+            "due_date": "",
+            "type": "",
+            "weight": 0
+        }
+    ],
+    "DeliveryOption": 2
+}
