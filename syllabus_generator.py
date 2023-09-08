@@ -154,31 +154,41 @@ while current_date <= term_dates['term_end_date']:
                 scheduled_activities.append((current_date, start_time, end_time, location, lesson_entry_type, topic))
                 lecture_topic_index += 1
 
-   # Schedule labs
+    # Schedule labs
     if data['HasLabs'] and (delivery_option == 'Conventional' or (delivery_option == 'Alternating' and not is_lecture_week)):
-        for lab in data['Labs']:
-            if current_date.strftime('%A').upper() == lab['day_of_week'] and lab_topic_index < len(lab_topics):
-                topic = lab_topics[lab_topic_index]['Topic']
+        for lab_topic in lab_topics:
+            topic = lab_topic['Topic']
+            for lab in data['Labs']:
                 section = lab['section']
-                start_time = lab['start_time']
-                duration = lab['duration']
-                location = lab['location']
-                end_time = (datetime.strptime(start_time, '%I:%M %p') + timedelta(hours=duration)).strftime('%I:%M %p')
-                scheduled_activities.append((current_date, start_time, end_time, location, lab_entry_type, topic + f" (Section {section})"))
-                lab_topic_index += 1  # Increment after a topic has been scheduled
+                if current_date.strftime('%A').upper() == lab['day_of_week'] and lab_topic_index < len(lab_topics):
+                    start_time = lab['start_time']
+                    duration = lab['duration']
+                    location = lab['location']
+                    end_time = (datetime.strptime(start_time, '%I:%M %p') + timedelta(hours=duration)).strftime('%I:%M %p')
+                    scheduled_activities.append((current_date, start_time, end_time, location, lab_entry_type, topic + f" (Section {section})"))
+                    lab_topic_index += 1  # Increment after a topic has been scheduled
+                    # Increment the start time for the next section's topic
+                    start_time = (datetime.strptime(start_time, '%I:%M %p') + timedelta(hours=duration)).strftime('%I:%M %p')
 
-   # Schedule tutorials
+
+
+    # Schedule tutorials
     if data['HasTutorials']:
-        for tutorial in data['Tutorials']:
-            if current_date.strftime('%A').upper() == tutorial['day_of_week'] and tutorial_topic_index < len(tutorial_topics):
-                topic = tutorial_topics[tutorial_topic_index]['Topic']
+        for tutorial_topic in tutorial_topics:
+            topic = tutorial_topic['Topic']
+            for tutorial in data['Tutorials']:
                 section = tutorial['section']
-                start_time = tutorial['start_time']
-                duration = tutorial['duration']
-                location = tutorial['location']
-                end_time = (datetime.strptime(start_time, '%I:%M %p') + timedelta(hours=duration)).strftime('%I:%M %p')
-                scheduled_activities.append((current_date, start_time, end_time, location, tutorial_entry_type, topic + f" (Section {section})"))
-                tutorial_topic_index += 1  # Increment after a topic has been scheduled
+                if current_date.strftime('%A').upper() == tutorial['day_of_week'] and tutorial_topic_index < len(tutorial_topics):
+                    start_time = tutorial['start_time']
+                    duration = tutorial['duration']
+                    location = tutorial['location']
+                    end_time = (datetime.strptime(start_time, '%I:%M %p') + timedelta(hours=duration)).strftime('%I:%M %p')
+                    scheduled_activities.append((current_date, start_time, end_time, location, tutorial_entry_type, topic + f" (Section {section})"))
+                    tutorial_topic_index += 1  # Increment after a topic has been scheduled
+                    # Increment the start time for the next section's topic
+                    start_time = (datetime.strptime(start_time, '%I:%M %p') + timedelta(hours=duration)).strftime('%I:%M %p')
+
+
 
     current_date += timedelta(days=1)
     if delivery_option == 'Alternating':
