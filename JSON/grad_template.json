@@ -44,5 +44,5 @@
             "weight": 0
         }
     ],
-    "DeliveryOption": 2
+    "DeliveryOption": "Alternating"
 }
