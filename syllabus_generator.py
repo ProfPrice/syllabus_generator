@@ -131,8 +131,6 @@ def get_next_available_date(current_date, day_of_week, unavailable_dates):
         current_date += timedelta(days=1)
 
 
-
-
 current_date = term_dates['term_start_date']
 while current_date <= term_dates['term_end_date']:
     if term_dates['reading_week_start'] <= current_date < term_dates['reading_week_start'] + timedelta(days=5) or current_date in unavailable_dates:
@@ -212,7 +210,38 @@ for deliverable in deliverables:
     print(f"| {name:30} | {weight:6}% |")
 print("+----------------------------------+--------+")
 
-if total_weight == 100:
-    print("\nThe total weight of all deliverables is 100%.")
+# Summary and Warnings
+print("\nSummary:")
+
+# Calculate total number of lecture times available in the term
+total_lecture_times = 0
+current_date = term_dates['term_start_date']
+while current_date <= term_dates['term_end_date']:
+    for lecture in data['Lectures']:
+        if current_date.strftime('%A').upper() == lecture['day_of_week']:
+            total_lecture_times += 1
+    current_date += timedelta(days=1)
+print(f"Total lectures scheduled: {lecture_topic_index} topics/{total_lecture_times} lessons")
+
+# Check for unused lecture times
+if total_lecture_times > len(lecture_topics):
+    print(f"Warning: There are {total_lecture_times - len(lecture_topics)} lecture times remaining in the term that have not been utilized with topics.")
+elif total_lecture_times == len(lecture_topics):
+    print("All lecture times in the term have been successfully utilized with topics.")
 else:
-    print(f"\nWarning! The total weight of all deliverables is {total_weight}%, which deviates from the expected 100%.")
+    print(f"Warning: More topics provided ({len(lecture_topics)}) than available lecture times ({total_lecture_times}).")
+
+print(f"Total tutorials scheduled (per section): {tutorial_topic_index}/{len(tutorial_topics)}")
+print(f"Total labs scheduled (per section): {lab_topic_index}/{len(lab_topics)}")
+print(f"Total weight of deliverables: {total_weight}%\n")
+
+# Check for discrepancies in scheduled lectures vs. available topics
+if lecture_topic_index < len(lecture_topics):
+    print(f"Warning: Not all lecture topics were scheduled. {len(lecture_topics) - lecture_topic_index} topics remain unscheduled.")
+elif lecture_topic_index > len(lecture_topics):
+    print(f"Warning: More lectures were scheduled than available topics. {lecture_topic_index - len(lecture_topics)} extra lectures were scheduled without topics.")
+
+# Check if total weight of deliverables is not 100%
+if total_weight != 100:
+    print(f"Warning: The total weight of deliverables is {total_weight}%, which is not equal to the expected 100%.")
+
