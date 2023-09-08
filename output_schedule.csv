@@ -1,0 +1,32 @@
+Date,Start Time,End Time,Location,Type,Description
+2023-01-09,09:30,10:30:00,Lecture Room A,Class section - Lecture,Introduction
+2023-01-16,09:30,10:30:00,Lecture Room A,Class section - Lecture,"Term-Project Introduction, Team Creation, and Monday.com"
+2023-01-23,09:30,10:30:00,Lecture Room A,Class section - Lecture,CSWA Exam: Certified SOLIDWORKS Associate in Mechanical Design
+2023-01-30,09:30,10:30:00,Lecture Room A,Class section - Lecture,Engineering Design Process and Customer Requirements
+2023-02-06,09:30,10:30:00,Lecture Room A,Class section - Lecture,Product Design Specifications (PDS)
+2023-02-13,09:30,10:30:00,Lecture Room A,Class section - Lecture,Quality Function Deployment (QFD)
+2023-02-27,09:30,10:30:00,Lecture Room A,Class section - Lecture,Planning and Scheduling a Design Project I: Work Breakdown Structure (WBS)
+2023-03-06,09:30,10:30:00,Lecture Room A,Class section - Lecture,"Planning and Scheduling a Design Project II: Resource estimation techniques, Gantt charts"
+2023-03-13,09:30,10:30:00,Lecture Room A,Class section - Lecture,"Planning and Scheduling a Design Project III: Network diagrams, Critical path"
+2023-03-20,09:30,10:30:00,Lecture Room A,Class section - Lecture,Concept Generation I: Functional Decomposition and Morphological Analysis
+2023-03-27,09:30,10:30:00,Lecture Room A,Class section - Lecture,Concept Generation II: Theory of Inventive Problem Solving (TRIZ) I
+2023-04-03,09:30,10:30:00,Lecture Room A,Class section - Lecture,Concept Generation II: Theory of Inventive Problem Solving (TRIZ) II
+2023-04-10,09:30,10:30:00,Lecture Room A,Class section - Lecture,Concept Selection Methodologies
+2023-01-18,10:30,11:30:00,Tutorial Room A,Tutorial,Tutorial on Introduction (Section A)
+2023-01-18,10:30,11:30:00,Tutorial Room A,Tutorial,Hands-on with Monday.com (Section A)
+2023-01-18,10:30,11:30:00,Tutorial Room A,Tutorial,SOLIDWORKS Basics (Section A)
+2023-01-18,10:30,11:30:00,Tutorial Room A,Tutorial,Design Process Discussion (Section A)
+2023-01-18,10:30,11:30:00,Tutorial Room A,Tutorial,Final Tutorial Review (Section A)
+2023-01-18,11:30,12:30:00,Tutorial Room B,Tutorial,Tutorial on Introduction (Section B)
+2023-01-18,11:30,12:30:00,Tutorial Room B,Tutorial,Hands-on with Monday.com (Section B)
+2023-01-18,11:30,12:30:00,Tutorial Room B,Tutorial,SOLIDWORKS Basics (Section B)
+2023-01-18,11:30,12:30:00,Tutorial Room B,Tutorial,Design Process Discussion (Section B)
+2023-01-18,11:30,12:30:00,Tutorial Room B,Tutorial,Final Tutorial Review (Section B)
+2023-01-27,13:30,15:30:00,Lab Room A,Class section - Lab,Lab Setup and Basics (Section A)
+2023-01-27,13:30,15:30:00,Lab Room A,Class section - Lab,Working with SOLIDWORKS (Section A)
+2023-01-27,13:30,15:30:00,Lab Room A,Class section - Lab,Advanced Design Techniques (Section A)
+2023-01-27,13:30,15:30:00,Lab Room A,Class section - Lab,Final Lab Assessment (Section A)
+2023-01-27,15:30,17:30:00,Lab Room B,Class section - Lab,Lab Setup and Basics (Section B)
+2023-01-27,15:30,17:30:00,Lab Room B,Class section - Lab,Working with SOLIDWORKS (Section B)
+2023-01-27,15:30,17:30:00,Lab Room B,Class section - Lab,Advanced Design Techniques (Section B)
+2023-01-27,15:30,17:30:00,Lab Room B,Class section - Lab,Final Lab Assessment (Section B)

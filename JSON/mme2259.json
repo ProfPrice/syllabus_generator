@@ -1,13 +1,13 @@
 {
   "CourseCode": "MME 2259",
   "TermDates": {
-    "term_start_date": "2023-01-09",
-    "term_end_date": "2023-04-14",
-    "tutorial_start_date": "2023-01-16",
-    "lab_start_date": "2023-01-23",
-    "reading_week_start": "2023-02-20"
+    "term_start_date": "2023-09-08",
+    "term_end_date": "2023-12-14",
+    "tutorial_start_date": "2023-09-16",
+    "lab_start_date": "2023-09-23",
+    "reading_week_start": "2023-11-10"
   },
-  "UnavailableDates": ["2023-02-21", "2023-03-17"],
+  "UnavailableDates": ["2023-11-21", "2023-10-17"],
   "DeliveryOption": "Conventional",
   "HasTutorials": true,
   "HasLabs": true,

@@ -1,16 +1,37 @@
 import json
 import csv
-from datetime import datetime, timedelta
+from datetime import datetime, date, timedelta
 import tkinter as tk
 from tkinter import filedialog
 import os
 from dateutil.easter import easter
+
+def nth_weekday(n, weekday, month, year):
+    """
+    Returns the date of the nth occurrence of the weekday in the specified month and year.
+    n: nth occurrence (e.g., 1 for first, 2 for second, etc.)
+    weekday: 0 for Monday, 1 for Tuesday, ..., 6 for Sunday
+    month: 1 for January, 2 for February, ..., 12 for December
+    year: the year
+    """
+    count = 0
+    day = 1
+    while count < n:
+        if date(year, month, day).weekday() == weekday:
+            count += 1
+        if count < n:
+            day += 1
+    return date(year, month, day)
 
 # Open file dialog to select the JSON file
 root = tk.Tk()
 root.withdraw()  # Hide the main window
 default_dir = os.path.join(os.getcwd(), 'JSON')
 json_file_path = filedialog.askopenfilename(initialdir=default_dir, title="Select the JSON course data file", filetypes=[("JSON files", "*.json")])
+
+# Derive the output filename from the input JSON filename
+output_filename = os.path.basename(json_file_path).replace('.json', '.csv')
+output_path = os.path.join('Output', output_filename)
 
 # Load course data from the selected JSON file
 with open(json_file_path, 'r') as file:
@@ -25,33 +46,70 @@ tutorial_entry_type = "Tutorial"
 term_dates = {key: datetime.strptime(value, '%Y-%m-%d').date() for key, value in data['TermDates'].items()}
 unavailable_dates = [datetime.strptime(date, '%Y-%m-%d').date() for date in data['UnavailableDates']]
 
-# Calculate recurring holidays
+# Calculate recurring holidays for the term year
 year = term_dates['term_start_date'].year
 
-# Canadian Thanksgiving (second Monday in October)
-thanksgiving = datetime(year, 10, 1).date()
-while thanksgiving.weekday() != 0:  # 0 represents Monday
-    thanksgiving += timedelta(days=1)
-thanksgiving += timedelta(weeks=1)
+# Canadian Thanksgiving - Second Monday of October
+thanksgiving = nth_weekday(2, 0, 10, year)  # 0 for Monday
+if thanksgiving < term_dates['term_start_date']:
+    thanksgiving = nth_weekday(2, 0, 10, year + 1)
 
-# Canada's Day of Truth and Reconciliation (September 30th, but observed on the preceding Friday if it falls on a weekend)
-truth_and_reconciliation = datetime(year, 9, 30).date()
+# Canada's Day of Truth and Reconciliation - September 30th
+truth_and_reconciliation = date(year, 9, 30)
 if truth_and_reconciliation.weekday() == 5:  # Saturday
     truth_and_reconciliation -= timedelta(days=1)
 elif truth_and_reconciliation.weekday() == 6:  # Sunday
-    truth_and_reconciliation -= timedelta(days=2)
+    truth_and_reconciliation += timedelta(days=1)
+if truth_and_reconciliation < term_dates['term_start_date']:
+    truth_and_reconciliation = datetime.date(year + 1, 9, 30)
+    if truth_and_reconciliation.weekday() == 5:  # Saturday
+        truth_and_reconciliation -= timedelta(days=1)
+    elif truth_and_reconciliation.weekday() == 6:  # Sunday
+        truth_and_reconciliation += timedelta(days=1)
 
-# Good Friday (two days before Easter Sunday)
-good_friday = easter(year) - timedelta(days=2)
+# Good Friday - Friday before Easter Sunday
+easter_sunday = easter(year)
+good_friday = easter_sunday - timedelta(days=2)
+if good_friday < term_dates['term_start_date']:
+    easter_sunday = easter(year + 1)
+    good_friday = easter_sunday - timedelta(days=2)
 
-# Family Day (third Monday in February for most provinces)
-family_day = datetime(year, 2, 1).date()
-while family_day.weekday() != 0:
-    family_day += timedelta(days=1)
-family_day += timedelta(weeks=2)
+# Family Day - Third Monday of February
+family_day = nth_weekday(3, 0, 2, year)  # 0 for Monday
+if family_day < term_dates['term_start_date']:
+    family_day = nth_weekday(3, 0, 2, year + 1)
 
-# Add these holidays to the unavailable dates list
+# Add the holidays to the unavailable dates
 unavailable_dates.extend([thanksgiving, truth_and_reconciliation, good_friday, family_day])
+
+# Ensure term start date, term end date, reading week start, and unavailable dates are not in the past
+current_date = datetime.now().date()
+if term_dates['term_start_date'] < current_date:
+    raise ValueError("The term start date is in the past. Please provide a valid future date.")
+
+if term_dates['term_end_date'] < current_date:
+    raise ValueError("The term end date is in the past. Please provide a valid future date.")
+
+if term_dates['reading_week_start'] < current_date:
+    raise ValueError("The reading week start date is in the past. Please provide a valid future date.")
+
+for date in unavailable_dates:
+    if date < current_date:
+        raise ValueError(f"The unavailable date {date} is in the past. Please provide a valid future date.")
+    
+# Print a summary of key dates and holidays
+print("Summary of Key Dates and Holidays:")
+print("----------------------------------")
+print(f"Term Start Date: {term_dates['term_start_date']}")
+print(f"Term End Date: {term_dates['term_end_date']}")
+print(f"Reading Week Start: {term_dates['reading_week_start']}")
+print(f"Unavailable Dates from JSON: {', '.join(map(str, data['UnavailableDates']))}")
+print(f"Day of Truth and Reconciliation: {truth_and_reconciliation}")
+print(f"Thanksgiving: {thanksgiving}")
+print(f"Good Friday: {good_friday}")
+print(f"Family Day: {family_day}")
+print("----------------------------------\n")
+
 
 # Extract topics
 lecture_topics = data['LectureTopics']
@@ -71,7 +129,7 @@ def get_next_available_date(current_date, day_of_week, unavailable_dates):
         current_date += timedelta(days=1)
 
 # Open output CSV file for writing
-with open('Output/scheduled_activities.csv', 'w', newline='') as csvfile:
+with open(output_path, 'w', newline='') as csvfile:
     output_csv = csv.writer(csvfile)
     output_csv.writerow(['Date', 'Start Time', 'End Time', 'Location', 'Activity Type', 'Topic'])
 
@@ -132,7 +190,7 @@ course_code = data['CourseCode']
 deliverables = data['Deliverables']
 total_weight = sum([deliverable['Weight'] for deliverable in deliverables])
 
-print(f"\nCourse {course_code} Deliverables:")
+print("\nCourse {course_code} Deliverables:")
 print("+----------------------------------+--------+")
 print("| Deliverable                      | Weight |")
 print("+----------------------------------+--------+")
@@ -143,6 +201,6 @@ for deliverable in deliverables:
 print("+----------------------------------+--------+")
 
 if total_weight == 100:
-    print(f"\nThe total weight of all deliverables is 100%.")
+    print("\nThe total weight of all deliverables is 100%.")
 else:
     print(f"\nWarning! The total weight of all deliverables is {total_weight}%, which deviates from the expected 100%.")
