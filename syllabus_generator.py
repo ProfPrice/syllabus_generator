@@ -142,7 +142,7 @@ while current_date <= term_dates['term_end_date']:
         current_date += timedelta(days=1)
         continue
 
-   # Schedule lectures
+    # Schedule lectures
     if delivery_option == 'Conventional' or (delivery_option == 'Alternating' and is_lecture_week):
         for lecture in data['Lectures']:
             if current_date.strftime('%A').upper() == lecture['day_of_week'] and lecture_topic_index < len(lecture_topics):
@@ -158,14 +158,14 @@ while current_date <= term_dates['term_end_date']:
     if data['HasLabs'] and (delivery_option == 'Conventional' or (delivery_option == 'Alternating' and not is_lecture_week)):
         for lab in data['Labs']:
             if current_date.strftime('%A').upper() == lab['day_of_week']:
-                for section in lab['section']:
-                    if lab_topic_index < len(lab_topics):
-                        start_time = lab['start_time']
-                        duration = lab['duration']
-                        location = lab['location']
-                        topic = lab_topics[lab_topic_index]['Topic'] + f" (Section {section})"
-                        end_time = (datetime.strptime(start_time, '%I:%M %p') + timedelta(hours=duration)).strftime('%I:%M %p')
-                        scheduled_activities.append((current_date, start_time, end_time, location, lab_entry_type, topic))
+                if lab_topic_index < len(lab_topics):
+                    start_time = lab['start_time']
+                    duration = lab['duration']
+                    location = lab['location']
+                    topic = lab_topics[lab_topic_index]['Topic']
+                    end_time = (datetime.strptime(start_time, '%I:%M %p') + timedelta(hours=duration)).strftime('%I:%M %p')
+                    for section in lab['section']:
+                        scheduled_activities.append((current_date, start_time, end_time, location, lab_entry_type, topic + f" (Section {section})"))
                 lab_topic_index += 1
 
 
