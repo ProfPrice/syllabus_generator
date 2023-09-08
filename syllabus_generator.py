@@ -121,6 +121,8 @@ lecture_topic_index = 0
 tutorial_topic_index = 0
 lab_topic_index = 0
 
+scheduled_activities = []
+
 # Helper function to get the next available date for a given day of the week
 def get_next_available_date(current_date, day_of_week, unavailable_dates):
     while True:
@@ -128,62 +130,72 @@ def get_next_available_date(current_date, day_of_week, unavailable_dates):
             return current_date
         current_date += timedelta(days=1)
 
-# Open output CSV file for writing
+
+
+
+current_date = term_dates['term_start_date']
+while current_date <= term_dates['term_end_date']:
+    if term_dates['reading_week_start'] <= current_date < term_dates['reading_week_start'] + timedelta(days=5) or current_date in unavailable_dates:
+        current_date += timedelta(days=1)
+        continue
+
+    # Schedule lectures
+    for lecture in data['Lectures']:
+        if current_date.strftime('%A').upper() == lecture['day_of_week'] and lecture_topic_index < len(lecture_topics):
+            start_time = lecture['start_time']
+            duration = lecture['duration']
+            location = lecture['location']
+            topic = lecture_topics[lecture_topic_index]['Topic']
+            end_time = (datetime.strptime(start_time, '%H:%M') + timedelta(hours=duration)).time().strftime('%H:%M')
+            scheduled_activities.append((current_date, start_time, end_time, location, lesson_entry_type, topic))
+            lecture_topic_index += 1
+
+    # Schedule labs
+    if data['HasLabs']:
+        while lab_topic_index < len(lab_topics):
+            sections_scheduled_for_labs = 0
+            for lab in data['Labs']:
+                lab_date = get_next_available_date(term_dates['lab_start_date'], lab['day_of_week'], unavailable_dates)
+                if lab_date <= term_dates['term_end_date']:
+                    start_time = lab['start_time']
+                    duration = lab['duration']
+                    location = lab['location']
+                    section = lab['section']
+                    topic = lab_topics[lab_topic_index]['Topic']
+                    scheduled_activities.append((lab_date, start_time, end_time, location, lab_entry_type, topic))
+                    sections_scheduled_for_labs += 1
+            if sections_scheduled_for_labs == len(data['Labs']):
+                lab_topic_index += 1
+
+    # Schedule tutorials
+    if data['HasTutorials']:
+        while tutorial_topic_index < len(tutorial_topics):
+            sections_scheduled = 0
+            for tutorial in data['Tutorials']:
+                tutorial_date = get_next_available_date(term_dates['tutorial_start_date'], tutorial['day_of_week'], unavailable_dates)
+                if tutorial_date <= term_dates['term_end_date']:
+                    start_time = tutorial['start_time']
+                    duration = tutorial['duration']
+                    location = tutorial['location']
+                    section = tutorial['section']
+                    topic = tutorial_topics[tutorial_topic_index]['Topic']
+                    scheduled_activities.append((tutorial_date, start_time, end_time, location, tutorial_entry_type, topic))
+                    sections_scheduled += 1
+            if sections_scheduled == len(data['Tutorials']):
+                tutorial_topic_index += 1
+
+    current_date += timedelta(days=1)
+
+# Sort the scheduled activities by date and start time
+scheduled_activities.sort(key=lambda x: (x[0], datetime.strptime(x[1], '%H:%M')))
+
+# Write the sorted activities to the CSV
 with open(output_path, 'w', newline='') as csvfile:
     output_csv = csv.writer(csvfile)
-    output_csv.writerow(['Date', 'Start Time', 'End Time', 'Location', 'Activity Type', 'Topic'])
+    output_csv.writerow(["Date", "Start Time", "End Time", "Location", "Type", "Description"])
+    for activity in scheduled_activities:
+        output_csv.writerow(activity)
 
-    current_date = term_dates['term_start_date']
-    while current_date <= term_dates['term_end_date']:
-        if term_dates['reading_week_start'] <= current_date < term_dates['reading_week_start'] + timedelta(days=5) or current_date in unavailable_dates:
-            current_date += timedelta(days=1)
-            continue
-
-        # Schedule lectures
-        for lecture in data['Lectures']:
-            if current_date.strftime('%A').upper() == lecture['day_of_week'] and lecture_topic_index < len(lecture_topics):
-                start_time = lecture['start_time']
-                duration = lecture['duration']
-                location = lecture['location']
-                topic = lecture_topics[lecture_topic_index]['Topic']
-                output_csv.writerow([current_date, start_time, (datetime.strptime(start_time, '%H:%M') + timedelta(hours=duration)).time(), location, lesson_entry_type, topic])
-                lecture_topic_index += 1
-
-        # Schedule labs
-        if data['HasLabs']:
-            while lab_topic_index < len(lab_topics):
-                sections_scheduled_for_labs = 0
-                for lab in data['Labs']:
-                    lab_date = get_next_available_date(term_dates['lab_start_date'], lab['day_of_week'], unavailable_dates)
-                    if lab_date <= term_dates['term_end_date']:
-                        start_time = lab['start_time']
-                        duration = lab['duration']
-                        location = lab['location']
-                        section = lab['section']
-                        topic = lab_topics[lab_topic_index]['Topic']
-                        output_csv.writerow([lab_date, start_time, (datetime.strptime(start_time, '%H:%M') + timedelta(hours=duration)).time(), location, lab_entry_type, topic + " (Section " + section + ")"])
-                        sections_scheduled_for_labs += 1
-                if sections_scheduled_for_labs == len(data['Labs']):
-                    lab_topic_index += 1
-
-        # Schedule tutorials
-        if data['HasTutorials']:
-            while tutorial_topic_index < len(tutorial_topics):
-                sections_scheduled = 0
-                for tutorial in data['Tutorials']:
-                    tutorial_date = get_next_available_date(term_dates['tutorial_start_date'], tutorial['day_of_week'], unavailable_dates)
-                    if tutorial_date <= term_dates['term_end_date']:
-                        start_time = tutorial['start_time']
-                        duration = tutorial['duration']
-                        location = tutorial['location']
-                        section = tutorial['section']
-                        topic = tutorial_topics[tutorial_topic_index]['Topic']
-                        output_csv.writerow([tutorial_date, start_time, (datetime.strptime(start_time, '%H:%M') + timedelta(hours=duration)).time(), location, tutorial_entry_type, topic + " (Section " + section + ")"])
-                        sections_scheduled += 1
-                if sections_scheduled == len(data['Tutorials']):
-                    tutorial_topic_index += 1
-
-        current_date += timedelta(days=1)
 
 # Display summary
 course_code = data['CourseCode']

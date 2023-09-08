@@ -1,0 +1,131 @@
+{
+  "CourseCode": "MME 2259",
+  "TermDates": {
+    "term_start_date": "2023-09-08",
+    "term_end_date": "2023-12-14",
+    "tutorial_start_date": "2023-09-16",
+    "lab_start_date": "2023-09-23",
+    "reading_week_start": "2023-11-10"
+  },
+  "UnavailableDates": ["2023-11-21", "2023-10-17"],
+  "DeliveryOption": "Conventional",
+  "HasTutorials": true,
+  "HasLabs": true,
+  "Lectures": [
+    {
+      "day_of_week": "MONDAY",
+      "start_time": "09:30",
+      "location": "Lecture Room A",
+      "duration": 1.0
+    },
+    {
+      "day_of_week": "WEDNESDAY",
+      "start_time": "10:30",
+      "location": "Lecture Room B",
+      "duration": 1.0
+    },
+    {
+      "day_of_week": "FRIDAY",
+      "start_time": "11:30",
+      "location": "Lecture Room C",
+      "duration": 1.0
+    }
+  ],
+  "Tutorials": [
+    {
+      "day_of_week": "WEDNESDAY",
+      "start_time": "10:30",
+      "location": "Tutorial Room A",
+      "duration": 1,
+      "section": "A"
+    },
+    {
+      "day_of_week": "WEDNESDAY",
+      "start_time": "11:30",
+      "location": "Tutorial Room B",
+      "duration": 1,
+      "section": "B"
+    }
+  ],
+  "Labs": [
+    {
+      "day_of_week": "FRIDAY",
+      "start_time": "13:30",
+      "location": "Lab Room A",
+      "duration": 2,
+      "section": "A"
+    },
+    {
+      "day_of_week": "FRIDAY",
+      "start_time": "15:30",
+      "location": "Lab Room B",
+      "duration": 2,
+      "section": "B"
+    }
+  ],
+  "LectureTopics": [
+    {"Topic": "Introduction", "Reference": ""},
+    {"Topic": "Term-Project Introduction, Team Creation, and Monday.com", "Reference": ""},
+    {"Topic": "CSWA Exam: Certified SOLIDWORKS Associate in Mechanical Design", "Reference": ""},
+    {"Topic": "Engineering Design Process and Customer Requirements", "Reference": ""},
+    {"Topic": "Product Design Specifications (PDS)", "Reference": ""},
+    {"Topic": "Quality Function Deployment (QFD)", "Reference": ""},
+    {"Topic": "Planning and Scheduling a Design Project I: Work Breakdown Structure (WBS)", "Reference": ""},
+    {"Topic": "Planning and Scheduling a Design Project II: Resource estimation techniques, Gantt charts", "Reference": ""},
+    {"Topic": "Planning and Scheduling a Design Project III: Network diagrams, Critical path", "Reference": ""},
+    {"Topic": "Concept Generation I: Functional Decomposition and Morphological Analysis", "Reference": ""},
+    {"Topic": "Concept Generation II: Theory of Inventive Problem Solving (TRIZ) I", "Reference": ""},
+    {"Topic": "Concept Generation II: Theory of Inventive Problem Solving (TRIZ) II", "Reference": ""},
+    {"Topic": "Concept Selection Methodologies", "Reference": ""},
+    {"Topic": "Assessing Technology Readiness", "Reference": ""},
+    {"Topic": "Stage-Gate Process for Product/Technology Development", "Reference": ""},
+    {"Topic": "Introduction to Machine Components", "Reference": ""},
+    {"Topic": "Engineering Drawings", "Reference": ""},
+    {"Topic": "GD&T I: Feature Control Frames", "Reference": ""},
+    {"Topic": "GD&T II: Mechanical Fits", "Reference": ""},
+    {"Topic": "Intro to DFM/DFA; DFM I: Machining", "Reference": ""},
+    {"Topic": "DFM II: Forming/Molding", "Reference": ""},
+    {"Topic": "DFM III: Forming Sheet Metal", "Reference": ""},
+    {"Topic": "DFM IV: Joining/Finishing, Design of Weldments", "Reference": ""},
+    {"Topic": "DFA I: Design Guidelines", "Reference": ""},
+    {"Topic": "DFA II: Manufacturing Cost Analysis", "Reference": ""},
+    {"Topic": "DFA III: Critique of DFA Methods", "Reference": ""},
+    {"Topic": "DFR I: Design Considerations, Factors of Safety, Fault Trees", "Reference": ""},
+    {"Topic": "DFR II: Failure Modes and Effects Analysis (FMEA)", "Reference": ""},
+    {"Topic": "Design for the Environment and Sustainability (DFE)", "Reference": ""},
+    {"Topic": "Human Factors in Design", "Reference": ""},
+    {"Topic": "Intellectual Property (IP); Patent Prospectus", "Reference": ""},
+    {"Topic": "Product Life-cycle Management (PLM), Engineering Change Notice", "Reference": ""},
+    {"Topic": "Cost Considerations: Machined parts, Plastic parts, Vendor Selection vs. Make/Buy Decision", "Reference": ""},
+    {"Topic": "Analytical Models, Prototyping, Physical Models, and Experimentation", "Reference": ""},
+    {"Topic": "Advanced Simulation: Topological optimization (TOSCA), Multibody body simulations (ADAMS), Particle Systems (ABAQUS)", "Reference": ""},
+    {"Topic": "Review", "Reference": ""}
+  ],
+  "TutorialTopics": [
+    {"Topic": "Tutorial on Introduction", "Reference": "Chapter 1"},
+    {"Topic": "Hands-on with Monday.com", "Reference": "Online Resources"},
+    {"Topic": "SOLIDWORKS Basics", "Reference": "Lab Manual 2"},
+    {"Topic": "Design Process Discussion", "Reference": "Chapter 3"},
+    {"Topic": "Final Tutorial Review", "Reference": "All Chapters"}
+  ],
+  "LabTopics": [
+    {"Topic": "Lab Setup and Basics", "Reference": "Lab Manual 1"},
+    {"Topic": "Working with SOLIDWORKS", "Reference": "Lab Manual 2"},
+    {"Topic": "Advanced Design Techniques", "Reference": "Lab Manual 3"},
+    {"Topic": "Final Lab Assessment", "Reference": "All Lab Manuals"}
+  ],
+  "Deliverables": [
+    {
+      "Name": "Assignment 1",
+      "DueDate": "2023-02-15",
+      "Type": "Assignment",
+      "Weight": 10
+    },
+    {
+      "Name": "Midterm Exam",
+      "DueDate": "2023-03-10",
+      "Type": "Exam",
+      "Weight": 25
+    }
+  ]
+}
