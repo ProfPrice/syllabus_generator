@@ -14,19 +14,19 @@
   "Lectures": [
     {
       "day_of_week": "MONDAY",
-      "start_time": "09:30",
+      "start_time": "9:30 AM",
       "location": "Lecture Room A",
       "duration": 1.0
     },
     {
       "day_of_week": "WEDNESDAY",
-      "start_time": "10:30",
+      "start_time": "10:30 AM",
       "location": "Lecture Room B",
       "duration": 1.0
     },
     {
       "day_of_week": "FRIDAY",
-      "start_time": "11:30",
+      "start_time": "11:30 AM",
       "location": "Lecture Room C",
       "duration": 1.0
     }
@@ -34,14 +34,14 @@
   "Tutorials": [
     {
       "day_of_week": "WEDNESDAY",
-      "start_time": "10:30",
+      "start_time": "10:30 AM",
       "location": "Tutorial Room A",
       "duration": 1,
       "section": "A"
     },
     {
-      "day_of_week": "WEDNESDAY",
-      "start_time": "11:30",
+      "day_of_week": "FRIDAY",
+      "start_time": "11:30 AM",
       "location": "Tutorial Room B",
       "duration": 1,
       "section": "B"
@@ -50,14 +50,14 @@
   "Labs": [
     {
       "day_of_week": "FRIDAY",
-      "start_time": "13:30",
+      "start_time": "1:30 PM",
       "location": "Lab Room A",
       "duration": 2,
       "section": "A"
     },
     {
       "day_of_week": "FRIDAY",
-      "start_time": "15:30",
+      "start_time": "3:30 PM",
       "location": "Lab Room B",
       "duration": 2,
       "section": "B"
