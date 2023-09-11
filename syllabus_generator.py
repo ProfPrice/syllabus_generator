@@ -5,6 +5,7 @@ import tkinter as tk
 from tkinter import filedialog
 import os
 from dateutil.easter import easter
+from prettytable import PrettyTable
 
 def nth_weekday(n, weekday, month, year):
     """
@@ -47,7 +48,8 @@ tutorial_entry_type = "Tutorial"
 
 # Extract term dates and other important dates
 term_dates = {key: datetime.strptime(value, '%Y-%m-%d').date() for key, value in data['TermDates'].items()}
-unavailable_dates = [datetime.strptime(date, '%Y-%m-%d').date() for date in data['UnavailableDates']]
+unavailable_dates = sorted([datetime.strptime(date, '%Y-%m-%d').date() for date in data['UnavailableDates']])
+
 
 # Extract the delivery option
 delivery_option = data.get('DeliveryOption', 'Conventional')
@@ -105,18 +107,26 @@ for date in unavailable_dates:
     if date < current_date:
         raise ValueError(f"The unavailable date {date} is in the past. Please provide a valid future date.")
     
-# Print a summary of key dates and holidays
+# Create a new table named dateSummaryTable
+dateSummaryTable = PrettyTable()
+dateSummaryTable.field_names = ["Description", "Date(s)"]
+# Set alignment for columns
+dateSummaryTable.align["Description"] = "l"
+dateSummaryTable.align["Date(s)"] = "c"
+
+# Add rows to the dateSummaryTable
+dateSummaryTable.add_row(["Term Start Date", term_dates['term_start_date']])
+dateSummaryTable.add_row(["Term End Date", term_dates['term_end_date']])
+dateSummaryTable.add_row(["Reading Week Start", term_dates['reading_week_start']])
+dateSummaryTable.add_row(["Unavailable Dates from JSON", ', '.join(map(str, data['UnavailableDates']))])
+dateSummaryTable.add_row(["Day of Truth and Reconciliation", truth_and_reconciliation])
+dateSummaryTable.add_row(["Thanksgiving", thanksgiving])
+dateSummaryTable.add_row(["Good Friday", good_friday])
+dateSummaryTable.add_row(["Family Day", family_day])
+
+# Print the dateSummaryTable
 print("Summary of Key Dates and Holidays:")
-print("----------------------------------")
-print(f"Term Start Date: {term_dates['term_start_date']}")
-print(f"Term End Date: {term_dates['term_end_date']}")
-print(f"Reading Week Start: {term_dates['reading_week_start']}")
-print(f"Unavailable Dates from JSON: {', '.join(map(str, data['UnavailableDates']))}")
-print(f"Day of Truth and Reconciliation: {truth_and_reconciliation}")
-print(f"Thanksgiving: {thanksgiving}")
-print(f"Good Friday: {good_friday}")
-print(f"Family Day: {family_day}")
-print("----------------------------------\n")
+print(dateSummaryTable)
 
 
 # Extract topics
@@ -196,21 +206,22 @@ with open(output_path, 'w', newline='') as csvfile:
     for activity in scheduled_activities:
         output_csv.writerow(activity)
 
-
 # Display summary
 course_code = data['CourseCode']
 deliverables = data['Deliverables']
 total_weight = sum([deliverable['Weight'] for deliverable in deliverables])
 
 print("\nCourse {course_code} Deliverables:")
-print("+----------------------------------+--------+")
-print("| Deliverable                      | Weight |")
-print("+----------------------------------+--------+")
+
+deliverableTable = PrettyTable()
+deliverableTable.field_names = ["Deliverable", "Weight"]
+
 for deliverable in deliverables:
     name = deliverable['Name']
-    weight = deliverable['Weight']
-    print(f"| {name:30} | {weight:6}% |")
-print("+----------------------------------+--------+")
+    weight = f"{deliverable['Weight']}%"
+    deliverableTable.add_row([name, weight])
+
+print(deliverableTable)
 
 # Summary and Warnings
 print("\nSummary:")
