@@ -182,7 +182,9 @@ while current_date <= term_dates['term_end_date']:
                 duration = activity['duration']
                 location = activity['location']
                 end_time = (datetime.strptime(start_time, '%I:%M %p') + timedelta(hours=duration)).strftime('%I:%M %p')
-                scheduled_activities.append((current_date, start_time, end_time, location, entry_type, topic + f" (Section {section})"))
+                # Construct the full topic description with the section
+                full_topic_description = f"{topic} (Section {section})"
+                scheduled_activities.append((current_date, start_time, end_time, location, entry_type, full_topic_description))
 
     # Schedule labs
     if data['HasLabs'] and (delivery_option == 'Conventional' or (delivery_option == 'Alternating' and not is_lecture_week)):
@@ -211,15 +213,24 @@ course_code = data['CourseCode']
 deliverables = data['Deliverables']
 total_weight = sum([deliverable['Weight'] for deliverable in deliverables])
 
-print("\nCourse {course_code} Deliverables:")
+print(f"\nCourse {course_code} Deliverables:")
 
 deliverableTable = PrettyTable()
 deliverableTable.field_names = ["Deliverable", "Weight"]
+deliverableTable.align["Deliverable"] = "l"
 
-for deliverable in deliverables:
+for index, deliverable in enumerate(deliverables):
     name = deliverable['Name']
     weight = f"{deliverable['Weight']}%"
-    deliverableTable.add_row([name, weight])
+    
+    # Check if it's the last iteration
+    if index == len(deliverables) - 1:
+        deliverableTable.add_row([name, weight], divider=True)
+    else:
+        deliverableTable.add_row([name, weight])
+
+# Add the total weight to the table
+deliverableTable.add_row(["TOTAL", f"{total_weight}%"])
 
 print(deliverableTable)
 
@@ -230,7 +241,7 @@ print("\nSummary:")
 total_lecture_times = 0
 current_date = term_dates['term_start_date']
 while current_date <= term_dates['term_end_date']:
-    for lecture in data['Lectures']:
+    for lecture in data['Class section - Lecture']:
         if current_date.strftime('%A').upper() == lecture['day_of_week']:
             total_lecture_times += 1
     current_date += timedelta(days=1)
