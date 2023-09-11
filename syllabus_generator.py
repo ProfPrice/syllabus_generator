@@ -149,7 +149,7 @@ while current_date <= term_dates['term_end_date']:
 
    # Schedule lectures
     if delivery_option == 'Conventional' or (delivery_option == 'Alternating' and is_lecture_week):
-        for lecture in data['Lectures']:
+        for lecture in data['Class section - Lecture']:
             if current_date.strftime('%A').upper() == lecture['day_of_week'] and lecture_topic_index < len(lecture_topics):
                 start_time = lecture['start_time']
                 duration = lecture['duration']
@@ -160,15 +160,19 @@ while current_date <= term_dates['term_end_date']:
                 lecture_topic_index += 1
 
     def schedule_activities(data, delivery_option, is_lecture_week, topics, entry_type):
+    # Check if the entry_type exists in the data dictionary
+        if entry_type not in data:
+            print(f"Warning: {entry_type} not found in the data. Skipping scheduling for this entry type.")
+            return
+
         for topic in topics:
             for activity in data[entry_type]:
-                if current_date.strftime('%A').upper() == activity['day_of_week']:
-                    section = activity['section']
-                    start_time = activity['start_time']
-                    duration = activity['duration']
-                    location = activity['location']
-                    end_time = (datetime.strptime(start_time, '%I:%M %p') + timedelta(hours=duration)).strftime('%I:%M %p')
-                    scheduled_activities.append((current_date, start_time, end_time, location, entry_type, topic + f" (Section {section})"))
+                section = activity['section']
+                start_time = activity['start_time']
+                duration = activity['duration']
+                location = activity['location']
+                end_time = (datetime.strptime(start_time, '%I:%M %p') + timedelta(hours=duration)).strftime('%I:%M %p')
+                scheduled_activities.append((current_date, start_time, end_time, location, entry_type, topic + f" (Section {section})"))
 
     # Schedule labs
     if data['HasLabs'] and (delivery_option == 'Conventional' or (delivery_option == 'Alternating' and not is_lecture_week)):

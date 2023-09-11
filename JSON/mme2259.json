@@ -11,7 +11,7 @@
   "DeliveryOption": "Conventional",
   "HasTutorials": true,
   "HasLabs": true,
-  "Lectures": [
+  "Class section - Lecture": [
     {
       "day_of_week": "MONDAY",
       "start_time": "9:30 AM",
@@ -31,7 +31,7 @@
       "duration": 1.0
     }
   ],
-  "Tutorials": [
+  "Tutorial": [
     {
       "day_of_week": "WEDNESDAY",
       "start_time": "10:30 AM",
@@ -47,7 +47,7 @@
       "section": "B"
     }
   ],
-  "Labs": [
+  "Class section - Lab": [
     {
       "day_of_week": "FRIDAY",
       "start_time": "1:30 PM",

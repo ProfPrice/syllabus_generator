@@ -1,46 +1,37 @@
 Date,Start Time,End Time,Location,Type,Description
-2023-09-08,11:30 AM,12:30 PM,Lecture Room C,Class section - Lecture,Introduction
-2023-09-08,11:30 AM,12:30 PM,Tutorial Room B,Tutorial,Tutorial on Introduction (Section B)
-2023-09-08,11:30 AM,12:30 PM,Tutorial Room B,Tutorial,Hands-on with Monday.com (Section B)
-2023-09-08,11:30 AM,12:30 PM,Tutorial Room B,Tutorial,SOLIDWORKS Basics (Section B)
-2023-09-08,11:30 AM,12:30 PM,Tutorial Room B,Tutorial,Design Process Discussion (Section B)
-2023-09-08,11:30 AM,12:30 PM,Tutorial Room B,Tutorial,Final Tutorial Review (Section B)
-2023-09-08,1:30 PM,03:30 PM,Lab Room A,Class section - Lab,Lab Setup and Basics (Section A)
-2023-09-08,1:30 PM,03:30 PM,Lab Room A,Class section - Lab,Working with SOLIDWORKS (Section A)
-2023-09-08,3:30 PM,05:30 PM,Lab Room B,Class section - Lab,Lab Setup and Basics (Section B)
-2023-09-08,3:30 PM,05:30 PM,Lab Room B,Class section - Lab,Working with SOLIDWORKS (Section B)
-2023-09-11,9:30 AM,10:30 AM,Lecture Room A,Class section - Lecture,"Term-Project Introduction, Team Creation, and Monday.com"
-2023-09-13,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,CSWA Exam: Certified SOLIDWORKS Associate in Mechanical Design
-2023-09-15,11:30 AM,12:30 PM,Lecture Room C,Class section - Lecture,Engineering Design Process and Customer Requirements
-2023-09-18,9:30 AM,10:30 AM,Lecture Room A,Class section - Lecture,Product Design Specifications (PDS)
-2023-09-20,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,Quality Function Deployment (QFD)
-2023-09-22,11:30 AM,12:30 PM,Lecture Room C,Class section - Lecture,Planning and Scheduling a Design Project I: Work Breakdown Structure (WBS)
-2023-09-25,9:30 AM,10:30 AM,Lecture Room A,Class section - Lecture,"Planning and Scheduling a Design Project II: Resource estimation techniques, Gantt charts"
-2023-09-27,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,"Planning and Scheduling a Design Project III: Network diagrams, Critical path"
-2023-10-02,9:30 AM,10:30 AM,Lecture Room A,Class section - Lecture,Concept Generation I: Functional Decomposition and Morphological Analysis
-2023-10-04,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,Concept Generation II: Theory of Inventive Problem Solving (TRIZ) I
-2023-10-06,11:30 AM,12:30 PM,Lecture Room C,Class section - Lecture,Concept Generation II: Theory of Inventive Problem Solving (TRIZ) II
-2023-10-11,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,Concept Selection Methodologies
-2023-10-13,11:30 AM,12:30 PM,Lecture Room C,Class section - Lecture,Assessing Technology Readiness
-2023-10-16,9:30 AM,10:30 AM,Lecture Room A,Class section - Lecture,Stage-Gate Process for Product/Technology Development
-2023-10-18,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,Introduction to Machine Components
-2023-10-20,11:30 AM,12:30 PM,Lecture Room C,Class section - Lecture,Engineering Drawings
-2023-10-23,9:30 AM,10:30 AM,Lecture Room A,Class section - Lecture,GD&T I: Feature Control Frames
-2023-10-25,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,GD&T II: Mechanical Fits
-2023-10-27,11:30 AM,12:30 PM,Lecture Room C,Class section - Lecture,Intro to DFM/DFA; DFM I: Machining
-2023-10-30,9:30 AM,10:30 AM,Lecture Room A,Class section - Lecture,DFM II: Forming/Molding
-2023-11-01,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,DFM III: Forming Sheet Metal
-2023-11-03,11:30 AM,12:30 PM,Lecture Room C,Class section - Lecture,"DFM IV: Joining/Finishing, Design of Weldments"
-2023-11-06,9:30 AM,10:30 AM,Lecture Room A,Class section - Lecture,DFA I: Design Guidelines
-2023-11-08,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,DFA II: Manufacturing Cost Analysis
-2023-11-15,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,DFA III: Critique of DFA Methods
-2023-11-17,11:30 AM,12:30 PM,Lecture Room C,Class section - Lecture,"DFR I: Design Considerations, Factors of Safety, Fault Trees"
-2023-11-20,9:30 AM,10:30 AM,Lecture Room A,Class section - Lecture,DFR II: Failure Modes and Effects Analysis (FMEA)
-2023-11-22,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,Design for the Environment and Sustainability (DFE)
-2023-11-24,11:30 AM,12:30 PM,Lecture Room C,Class section - Lecture,Human Factors in Design
-2023-11-27,9:30 AM,10:30 AM,Lecture Room A,Class section - Lecture,Intellectual Property (IP); Patent Prospectus
-2023-11-29,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,"Product Life-cycle Management (PLM), Engineering Change Notice"
-2023-12-01,11:30 AM,12:30 PM,Lecture Room C,Class section - Lecture,"Cost Considerations: Machined parts, Plastic parts, Vendor Selection vs. Make/Buy Decision"
-2023-12-04,9:30 AM,10:30 AM,Lecture Room A,Class section - Lecture,"Analytical Models, Prototyping, Physical Models, and Experimentation"
-2023-12-06,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,"Advanced Simulation: Topological optimization (TOSCA), Multibody body simulations (ADAMS), Particle Systems (ABAQUS)"
-2023-12-08,11:30 AM,12:30 PM,Lecture Room C,Class section - Lecture,Review
+2023-09-13,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,Introduction
+2023-09-15,11:30 AM,12:30 PM,Lecture Room C,Class section - Lecture,"Term-Project Introduction, Team Creation, and Monday.com"
+2023-09-18,9:30 AM,10:30 AM,Lecture Room A,Class section - Lecture,CSWA Exam: Certified SOLIDWORKS Associate in Mechanical Design
+2023-09-20,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,Engineering Design Process and Customer Requirements
+2023-09-22,11:30 AM,12:30 PM,Lecture Room C,Class section - Lecture,Product Design Specifications (PDS)
+2023-09-25,9:30 AM,10:30 AM,Lecture Room A,Class section - Lecture,Quality Function Deployment (QFD)
+2023-09-27,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,Planning and Scheduling a Design Project I: Work Breakdown Structure (WBS)
+2023-10-02,9:30 AM,10:30 AM,Lecture Room A,Class section - Lecture,"Planning and Scheduling a Design Project II: Resource estimation techniques, Gantt charts"
+2023-10-04,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,"Planning and Scheduling a Design Project III: Network diagrams, Critical path"
+2023-10-06,11:30 AM,12:30 PM,Lecture Room C,Class section - Lecture,Concept Generation I: Functional Decomposition and Morphological Analysis
+2023-10-11,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,Concept Generation II: Theory of Inventive Problem Solving (TRIZ) I
+2023-10-13,11:30 AM,12:30 PM,Lecture Room C,Class section - Lecture,Concept Generation II: Theory of Inventive Problem Solving (TRIZ) II
+2023-10-16,9:30 AM,10:30 AM,Lecture Room A,Class section - Lecture,Concept Selection Methodologies
+2023-10-18,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,Assessing Technology Readiness
+2023-10-20,11:30 AM,12:30 PM,Lecture Room C,Class section - Lecture,Stage-Gate Process for Product/Technology Development
+2023-10-23,9:30 AM,10:30 AM,Lecture Room A,Class section - Lecture,Introduction to Machine Components
+2023-10-25,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,Engineering Drawings
+2023-10-27,11:30 AM,12:30 PM,Lecture Room C,Class section - Lecture,GD&T I: Feature Control Frames
+2023-10-30,9:30 AM,10:30 AM,Lecture Room A,Class section - Lecture,GD&T II: Mechanical Fits
+2023-11-01,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,Intro to DFM/DFA; DFM I: Machining
+2023-11-03,11:30 AM,12:30 PM,Lecture Room C,Class section - Lecture,DFM II: Forming/Molding
+2023-11-06,9:30 AM,10:30 AM,Lecture Room A,Class section - Lecture,DFM III: Forming Sheet Metal
+2023-11-08,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,"DFM IV: Joining/Finishing, Design of Weldments"
+2023-11-15,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,DFA I: Design Guidelines
+2023-11-17,11:30 AM,12:30 PM,Lecture Room C,Class section - Lecture,DFA II: Manufacturing Cost Analysis
+2023-11-20,9:30 AM,10:30 AM,Lecture Room A,Class section - Lecture,DFA III: Critique of DFA Methods
+2023-11-22,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,"DFR I: Design Considerations, Factors of Safety, Fault Trees"
+2023-11-24,11:30 AM,12:30 PM,Lecture Room C,Class section - Lecture,DFR II: Failure Modes and Effects Analysis (FMEA)
+2023-11-27,9:30 AM,10:30 AM,Lecture Room A,Class section - Lecture,Design for the Environment and Sustainability (DFE)
+2023-11-29,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,Human Factors in Design
+2023-12-01,11:30 AM,12:30 PM,Lecture Room C,Class section - Lecture,Intellectual Property (IP); Patent Prospectus
+2023-12-04,9:30 AM,10:30 AM,Lecture Room A,Class section - Lecture,"Product Life-cycle Management (PLM), Engineering Change Notice"
+2023-12-06,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,"Cost Considerations: Machined parts, Plastic parts, Vendor Selection vs. Make/Buy Decision"
+2023-12-08,11:30 AM,12:30 PM,Lecture Room C,Class section - Lecture,"Analytical Models, Prototyping, Physical Models, and Experimentation"
+2023-12-11,9:30 AM,10:30 AM,Lecture Room A,Class section - Lecture,"Advanced Simulation: Topological optimization (TOSCA), Multibody body simulations (ADAMS), Particle Systems (ABAQUS)"
+2023-12-13,10:30 AM,11:30 AM,Lecture Room B,Class section - Lecture,Review
