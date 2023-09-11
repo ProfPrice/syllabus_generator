@@ -7,6 +7,10 @@ import os
 from dateutil.easter import easter
 from prettytable import PrettyTable
 
+def print_warning(message):
+    print(f"❌ Warning: {message}")
+
+
 def nth_weekday(n, weekday, month, year):
     """
     Returns the date of the nth occurrence of the weekday in the specified month and year.
@@ -172,7 +176,7 @@ while current_date <= term_dates['term_end_date']:
     def schedule_activities(data, delivery_option, is_lecture_week, topics, entry_type):
     # Check if the entry_type exists in the data dictionary
         if entry_type not in data:
-            print(f"Warning: {entry_type} not found in the data. Skipping scheduling for this entry type.")
+            print_warning(f"{entry_type} not found in the data. Skipping scheduling for this entry type.")
             return
 
         for topic in topics:
@@ -234,8 +238,11 @@ deliverableTable.add_row(["TOTAL", f"{total_weight}%"])
 
 print(deliverableTable)
 
-# Summary and Warnings
-print("\nSummary:")
+# Check if total weight of deliverables is not 100%
+if total_weight != 100:
+    print_warning(f"The total sum of deliverables is {total_weight}%, which is not equal to the expected 100%.")
+else:
+    print(f"✅ The total sum of deliverables is {total_weight}%")
 
 # Calculate total number of lecture times available in the term
 total_lecture_times = 0
@@ -245,27 +252,32 @@ while current_date <= term_dates['term_end_date']:
         if current_date.strftime('%A').upper() == lecture['day_of_week']:
             total_lecture_times += 1
     current_date += timedelta(days=1)
-print(f"Total lectures scheduled: {lecture_topic_index} topics/{total_lecture_times} lessons")
+
+# Summary and Warnings
+print("\nScheduling Summary:")
+
+# Create a new table named scheduleSummaryTable
+scheduleSummaryTable = PrettyTable()
+scheduleSummaryTable.field_names = ["Activity scheduled", "Scheduled", "Available"]
+# Add rows to the scheduleSummaryTable
+scheduleSummaryTable.add_row(["Lectures", lecture_topic_index,len(data['Class section - Lecture'])])
+scheduleSummaryTable.add_row(["Tutorials (/§)", tutorial_topic_index, len(tutorial_topics)])
+scheduleSummaryTable.add_row(["Labs (/§)", lab_topic_index, len(lab_topics)])
+# Print the scheduleSummaryTable
+print(scheduleSummaryTable)
+
 
 # Check for unused lecture times
 if total_lecture_times > len(lecture_topics):
-    print(f"Warning: There are {total_lecture_times - len(lecture_topics)} lecture times remaining in the term that have not been utilized with topics.")
+    print_warning(f"There are {total_lecture_times - len(lecture_topics)} lecture times remaining in the term that have not been utilized with topics.")
 elif total_lecture_times == len(lecture_topics):
-    print("All lecture times in the term have been successfully utilized with topics.")
+    print("✅ All lecture times in the term have been successfully utilized with topics.")
 else:
-    print(f"Warning: More topics provided ({len(lecture_topics)}) than available lecture times ({total_lecture_times}).")
-
-print(f"Total tutorials scheduled (per section): {tutorial_topic_index}/{len(tutorial_topics)}")
-print(f"Total labs scheduled (per section): {lab_topic_index}/{len(lab_topics)}")
-print(f"Total weight of deliverables: {total_weight}%\n")
+    print_warning(f"More topics provided ({len(lecture_topics)}) than available lecture times ({total_lecture_times}).")
 
 # Check for discrepancies in scheduled lectures vs. available topics
 if lecture_topic_index < len(lecture_topics):
-    print(f"Warning: Not all lecture topics were scheduled. {len(lecture_topics) - lecture_topic_index} topics remain unscheduled.")
+    print_warning(f"Not all lecture topics were scheduled. {len(lecture_topics) - lecture_topic_index} topics remain unscheduled.")
 elif lecture_topic_index > len(lecture_topics):
-    print(f"Warning: More lectures were scheduled than available topics. {lecture_topic_index - len(lecture_topics)} extra lectures were scheduled without topics.")
-
-# Check if total weight of deliverables is not 100%
-if total_weight != 100:
-    print(f"Warning: The total weight of deliverables is {total_weight}%, which is not equal to the expected 100%.")
+    print_warning(f"More lectures were scheduled than available topics. {lecture_topic_index - len(lecture_topics)} extra lectures were scheduled without topics.")
 

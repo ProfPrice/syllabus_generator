@@ -119,10 +119,46 @@
       "Name": "Assignment 1",
       "DueDate": "2023-02-15",
       "Type": "Assignment",
+      "Weight": 8
+    },
+    {
+      "Name": "Assignment 2",
+      "DueDate": "2023-03-15",
+      "Type": "Assignment",
+      "Weight": 8
+    },
+    {
+      "Name": "Assignment 3",
+      "DueDate": "2023-02-15",
+      "Type": "Assignment",
+      "Weight": 8
+    },
+    {
+      "Name": "Assignment 4",
+      "DueDate": "2023-03-15",
+      "Type": "Assignment",
+      "Weight": 8
+    },
+    {
+      "Name": "Assignment 5",
+      "DueDate": "2023-03-15",
+      "Type": "Assignment",
+      "Weight": 8
+    },
+    {
+      "Name": "Project",
+      "DueDate": "2023-02-15",
+      "Type": "Assignment",
+      "Weight": 25
+    },
+    {
+      "Name": "CSWA Exam",
+      "DueDate": "2023-03-10",
+      "Type": "Exam",
       "Weight": 10
     },
     {
-      "Name": "Midterm Exam",
+      "Name": "Final Exam",
       "DueDate": "2023-03-10",
       "Type": "Exam",
       "Weight": 25
