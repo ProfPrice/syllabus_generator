@@ -157,7 +157,14 @@ current_date = term_dates['term_start_date']
 is_lecture_week = True  # Start with a lecture for the alternating option
 
 while current_date <= term_dates['term_end_date']:
-    if term_dates['reading_week_start'] <= current_date < term_dates['reading_week_start'] + timedelta(days=5) or current_date in unavailable_dates:
+    # Check if current_date is within the reading week range
+    is_within_reading_week = term_dates['reading_week_start'] <= current_date < term_dates['reading_week_start'] + timedelta(days=5)
+
+    # Check if current_date is in the unavailable dates
+    is_unavailable_date = current_date in unavailable_dates
+
+    # Skip date if not available for scheduling
+    if is_within_reading_week or is_unavailable_date:
         current_date += timedelta(days=1)
         continue
 
@@ -260,7 +267,7 @@ print("\nScheduling Summary:")
 scheduleSummaryTable = PrettyTable()
 scheduleSummaryTable.field_names = ["Activity scheduled", "Scheduled", "Available"]
 # Add rows to the scheduleSummaryTable
-scheduleSummaryTable.add_row(["Lectures", lecture_topic_index,len(data['Class section - Lecture'])])
+scheduleSummaryTable.add_row(["Lectures", lecture_topic_index,len(lecture_topics)])
 scheduleSummaryTable.add_row(["Tutorials (/§)", tutorial_topic_index, len(tutorial_topics)])
 scheduleSummaryTable.add_row(["Labs (/§)", lab_topic_index, len(lab_topics)])
 # Print the scheduleSummaryTable
