@@ -194,7 +194,13 @@ while current_date <= term_dates['term_end_date']:
                 location = activity['location']
                 end_time = (datetime.strptime(start_time, '%I:%M %p') + timedelta(hours=duration)).strftime('%I:%M %p')
                 # Construct the full topic description with the section
-                full_topic_description = f"{topic} (Section {section})"
+                topic_content = topic["Topic"]
+                reference_content = topic.get("Reference", "")
+                # Construct the full topic description with the section
+                if reference_content:
+                    full_topic_description = f"{topic_content} ({reference_content}) (Section {section})"
+                else:
+                    full_topic_description = f"{topic_content} (Section {section})"
                 scheduled_activities.append((current_date, start_time, end_time, location, entry_type, full_topic_description))
 
     # Schedule labs
@@ -299,3 +305,25 @@ if lecture_topic_index < len(lecture_topics):
 elif lecture_topic_index > len(lecture_topics):
     print_warning(f"More lectures were scheduled than available topics. {lecture_topic_index - len(lecture_topics)} extra lectures were scheduled without topics.")
 
+
+# Displaying scheduled activities using PrettyTable
+def display_activities(activities):
+    # Grouping activities by type
+    activity_groups = {}
+    for activity in activities:
+        current_date, _, _, _, entry_type, topic = activity
+        if entry_type not in activity_groups:
+            activity_groups[entry_type] = []
+        activity_groups[entry_type].append((topic, current_date))
+    
+    # Displaying each group in a PrettyTable
+    for activity_type, group in activity_groups.items():
+        table = PrettyTable()
+        table.field_names = ["Topic", "Date"]
+        table.align["Topic"] = "l"
+        for entry in group:
+            table.add_row(list(entry))
+        print(f"\n{activity_type}\n{table}")
+
+# Invoke the function to display activities
+display_activities(scheduled_activities)
