@@ -23,11 +23,14 @@ def nth_weekday(n, weekday, month, year):
             day += 1
     return date(year, month, day)
 
-# Open file dialog to select the JSON file
+""" # Open file dialog to select the JSON file
 root = tk.Tk()
 root.withdraw()  # Hide the main window
 default_dir = os.path.join(os.getcwd(), 'JSON')
-json_file_path = filedialog.askopenfilename(initialdir=default_dir, title="Select the JSON course data file", filetypes=[("JSON files", "*.json")])
+json_file_path = filedialog.askopenfilename(initialdir=default_dir, title="Select the JSON course data file", filetypes=[("JSON files", "*.json")]) """
+# Hardcoded relative file path
+json_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'JSON', 'mme2259.json')
+
 
 # Derive the output filename from the input JSON filename
 output_filename = os.path.basename(json_file_path).replace('.json', '.csv')
@@ -87,7 +90,9 @@ unavailable_dates.extend([thanksgiving, truth_and_reconciliation, good_friday, f
 
 # Ensure term start date, term end date, reading week start, and unavailable dates are not in the past
 current_date = datetime.now().date()
-if term_dates['term_start_date'] < current_date:
+one_month_ago = current_date - timedelta(days=30)  # Approximate a month as 30 days
+
+if term_dates['term_start_date'] < one_month_ago:
     raise ValueError("The term start date is in the past. Please provide a valid future date.")
 
 if term_dates['term_end_date'] < current_date:
@@ -124,6 +129,7 @@ lecture_topic_index = 0
 tutorial_topic_index = 0
 lab_topic_index = 0
 
+# Initialize storage for scheduled events
 scheduled_activities = []
 
 # Helper function to get the next available date for a given day of the week
@@ -132,7 +138,6 @@ def get_next_available_date(current_date, day_of_week, unavailable_dates):
         if current_date.strftime('%A').upper() == day_of_week and current_date not in unavailable_dates:
             return current_date
         current_date += timedelta(days=1)
-
 
 current_date = term_dates['term_start_date']
 is_lecture_week = True  # Start with a lecture for the alternating option
@@ -154,45 +159,28 @@ while current_date <= term_dates['term_end_date']:
                 scheduled_activities.append((current_date, start_time, end_time, location, lesson_entry_type, topic))
                 lecture_topic_index += 1
 
+    def schedule_activities(data, delivery_option, is_lecture_week, topics, entry_type):
+        for topic in topics:
+            for activity in data[entry_type]:
+                if current_date.strftime('%A').upper() == activity['day_of_week']:
+                    section = activity['section']
+                    start_time = activity['start_time']
+                    duration = activity['duration']
+                    location = activity['location']
+                    end_time = (datetime.strptime(start_time, '%I:%M %p') + timedelta(hours=duration)).strftime('%I:%M %p')
+                    scheduled_activities.append((current_date, start_time, end_time, location, entry_type, topic + f" (Section {section})"))
+
     # Schedule labs
     if data['HasLabs'] and (delivery_option == 'Conventional' or (delivery_option == 'Alternating' and not is_lecture_week)):
-        for lab_topic in lab_topics:
-            topic = lab_topic['Topic']
-            for lab in data['Labs']:
-                section = lab['section']
-                if current_date.strftime('%A').upper() == lab['day_of_week'] and lab_topic_index < len(lab_topics):
-                    start_time = lab['start_time']
-                    duration = lab['duration']
-                    location = lab['location']
-                    end_time = (datetime.strptime(start_time, '%I:%M %p') + timedelta(hours=duration)).strftime('%I:%M %p')
-                    scheduled_activities.append((current_date, start_time, end_time, location, lab_entry_type, topic + f" (Section {section})"))
-                    lab_topic_index += 1  # Increment after a topic has been scheduled
-                    # Increment the start time for the next section's topic
-                    start_time = (datetime.strptime(start_time, '%I:%M %p') + timedelta(hours=duration)).strftime('%I:%M %p')
-
-
+        schedule_activities(data, delivery_option, is_lecture_week, lab_topics, lab_entry_type)
 
     # Schedule tutorials
     if data['HasTutorials']:
-        for tutorial_topic in tutorial_topics:
-            topic = tutorial_topic['Topic']
-            for tutorial in data['Tutorials']:
-                section = tutorial['section']
-                if current_date.strftime('%A').upper() == tutorial['day_of_week'] and tutorial_topic_index < len(tutorial_topics):
-                    start_time = tutorial['start_time']
-                    duration = tutorial['duration']
-                    location = tutorial['location']
-                    end_time = (datetime.strptime(start_time, '%I:%M %p') + timedelta(hours=duration)).strftime('%I:%M %p')
-                    scheduled_activities.append((current_date, start_time, end_time, location, tutorial_entry_type, topic + f" (Section {section})"))
-                    tutorial_topic_index += 1  # Increment after a topic has been scheduled
-                    # Increment the start time for the next section's topic
-                    start_time = (datetime.strptime(start_time, '%I:%M %p') + timedelta(hours=duration)).strftime('%I:%M %p')
-
-
+        schedule_activities(data, delivery_option, is_lecture_week, tutorial_topics, tutorial_entry_type)
 
     current_date += timedelta(days=1)
     if delivery_option == 'Alternating':
-        is_lecture_week = not is_lecture_week
+        is_lecture_week = not is_lecture_week # When the last lab has been scheduled keep this true in pertetuity.
 
 # Sort the scheduled activities by date and start time
 scheduled_activities.sort(key=lambda x: (x[0], datetime.strptime(x[1], '%I:%M %p')))
