@@ -254,10 +254,21 @@ else:
 # Calculate total number of lecture times available in the term
 total_lecture_times = 0
 current_date = term_dates['term_start_date']
+
 while current_date <= term_dates['term_end_date']:
-    for lecture in data['Class section - Lecture']:
-        if current_date.strftime('%A').upper() == lecture['day_of_week']:
-            total_lecture_times += 1
+    
+    # Check if current_date is within the reading week range
+    is_within_reading_week = term_dates['reading_week_start'] <= current_date < term_dates['reading_week_start'] + timedelta(days=5)
+    
+    # Check if current_date is in the unavailable dates
+    is_unavailable_date = current_date in unavailable_dates
+    
+    # Only consider the lecture if the current_date is not within the reading week and is not an unavailable date
+    if not (is_within_reading_week or is_unavailable_date):
+        for lecture in data['Class section - Lecture']:
+            if current_date.strftime('%A').upper() == lecture['day_of_week']:
+                total_lecture_times += 1
+                
     current_date += timedelta(days=1)
 
 # Summary and Warnings
