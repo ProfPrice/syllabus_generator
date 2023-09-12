@@ -41,7 +41,7 @@ default_dir = os.path.join(os.getcwd(), 'JSON')
 json_file_path = filedialog.askopenfilename(initialdir=default_dir, title="Select the JSON course data file", filetypes=[("JSON files", "*.json")]) """
 # Hardcoded relative file path
 json_file_path = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "JSON", "mme9624.json"
+    os.path.dirname(os.path.abspath(__file__)), "JSON", "mme2259.json"
 )
 
 # Derive the output filename from the input JSON filename

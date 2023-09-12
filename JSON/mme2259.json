@@ -3,64 +3,55 @@
   "TermDates": {
     "term_start_date": "2023-09-07",
     "term_end_date": "2023-12-08",
-    "tutorial_start_date": "2023-09-16",
-    "lab_start_date": "2023-09-23",
+    "tutorial_start_date": "2023-09-18",
+    "lab_start_date": "2023-09-18",
     "reading_week_start": "2023-10-30"
   },
   "UnavailableDates": [],
   "DeliveryOption": "Conventional",
-  "HasTutorials": true,
+  "HasTutorials": false,
   "HasLabs": true,
   "Class section - Lecture": [
     {
-      "day_of_week": "MONDAY",
+      "day_of_week": "WEDNESDAY",
       "start_time": "9:30 AM",
-      "location": "Lecture Room A",
+      "location": "HSB 236",
       "duration": 1.0
     },
     {
       "day_of_week": "WEDNESDAY",
       "start_time": "10:30 AM",
-      "location": "Lecture Room B",
+      "location": "HSB 236",
       "duration": 1.0
     },
     {
       "day_of_week": "FRIDAY",
-      "start_time": "11:30 AM",
-      "location": "Lecture Room C",
+      "start_time": "9:30 AM",
+      "location": "HSB 236",
       "duration": 1.0
-    }
-  ],
-  "Tutorial": [
-    {
-      "day_of_week": "WEDNESDAY",
-      "start_time": "10:30 AM",
-      "location": "Tutorial Room A",
-      "duration": 1,
-      "section": "A"
-    },
-    {
-      "day_of_week": "FRIDAY",
-      "start_time": "11:30 AM",
-      "location": "Tutorial Room B",
-      "duration": 1,
-      "section": "B"
     }
   ],
   "Class section - Lab": [
     {
       "day_of_week": "THURSDAY",
-      "start_time": "1:30 PM",
-      "location": "Lab Room A",
-      "duration": 2,
-      "section": "A"
+      "start_time": "5:30 PM",
+      "location": "ACEB 2415",
+      "duration": 3,
+      "section": "1401"
     },
     {
-      "day_of_week": "FRIDAY",
-      "start_time": "3:30 PM",
-      "location": "Lab Room B",
-      "duration": 2,
-      "section": "B"
+      "day_of_week": "THURSDAY",
+      "start_time": "1:30 PM",
+      "location": "ACEB 2415",
+      "duration": 3,
+      "section": "1492"
+    },
+    {
+      "day_of_week": "TUESDAY",
+      "start_time": "5:30 PM",
+      "location": "ACEB 2415",
+      "duration": 3,
+      "section": "3689"
     }
   ],
   "LectureTopics": [
@@ -101,18 +92,20 @@
     {"Topic": "Advanced Simulation: Topological optimization (TOSCA), Multibody body simulations (ADAMS), Particle Systems (ABAQUS)", "Reference": ""},
     {"Topic": "Review", "Reference": ""}
   ],
-  "TutorialTopics": [
-    {"Topic": "Tutorial on Introduction", "Reference": "Chapter 1"},
-    {"Topic": "Hands-on with Monday.com", "Reference": "Online Resources"},
-    {"Topic": "SOLIDWORKS Basics", "Reference": "Lab Manual 2"},
-    {"Topic": "Design Process Discussion", "Reference": "Chapter 3"},
-    {"Topic": "Final Tutorial Review", "Reference": "All Chapters"}
-  ],
   "LabTopics": [
-    {"Topic": "Lab Setup and Basics", "Reference": "Lab Manual 1"},
-    {"Topic": "Working with SOLIDWORKS", "Reference": "Lab Manual 2"},
-    {"Topic": "Advanced Design Techniques", "Reference": "Lab Manual 3"},
-    {"Topic": "Final Lab Assessment", "Reference": "All Lab Manuals"}
+    {"Topic": "Lab Setup and Basics", "Reference": ""},
+    {"Topic": "Working with SOLIDWORKS", "Reference": ""},
+    {"Topic": "Advanced Design Techniques", "Reference": ""},
+    {"Topic": "Advanced Design Techniques", "Reference": ""},
+    {"Topic": "Advanced Design Techniques", "Reference": ""},
+    {"Topic": "Advanced Design Techniques", "Reference": ""},
+    {"Topic": "Advanced Design Techniques", "Reference": ""},
+    {"Topic": "Advanced Design Techniques", "Reference": ""},
+    {"Topic": "Advanced Design Techniques", "Reference": ""},
+    {"Topic": "Advanced Design Techniques", "Reference": ""},
+    {"Topic": "Advanced Design Techniques", "Reference": ""},
+    {"Topic": "Advanced Design Techniques", "Reference": ""},
+    {"Topic": "Final Lab Assessment", "Reference": ""}
   ],
   "Deliverables": [
     {
@@ -159,7 +152,7 @@
     },
     {
       "Name": "Final Exam",
-      "DueDate": "2023-03-10",
+      "DueDate": "2023-04-10",
       "Type": "Exam",
       "Weight": 25
     }

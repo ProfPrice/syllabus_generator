@@ -1,63 +1,63 @@
 {
   "CourseCode": "MME 2259",
   "TermDates": {
-    "term_start_date": "2023-09-08",
-    "term_end_date": "2023-12-14",
-    "tutorial_start_date": "2023-09-16",
-    "lab_start_date": "2023-09-23",
-    "reading_week_start": "2023-11-10"
+    "term_start_date": "2023-09-07",
+    "term_end_date": "2023-12-08",
+    "tutorial_start_date": "2023-09-18",
+    "lab_start_date": "2023-09-18",
+    "reading_week_start": "2023-10-30"
   },
-  "UnavailableDates": ["2023-11-21", "2023-10-17"],
+  "UnavailableDates": [],
   "DeliveryOption": "Conventional",
-  "HasTutorials": true,
+  "HasTutorials": false,
   "HasLabs": true,
-  "Lectures": [
+  "Class section - Lecture": [
     {
       "day_of_week": "MONDAY",
-      "start_time": "09:30",
+      "start_time": "9:30 AM",
       "location": "Lecture Room A",
       "duration": 1.0
     },
     {
       "day_of_week": "WEDNESDAY",
-      "start_time": "10:30",
+      "start_time": "10:30 AM",
       "location": "Lecture Room B",
       "duration": 1.0
     },
     {
       "day_of_week": "FRIDAY",
-      "start_time": "11:30",
+      "start_time": "11:30 AM",
       "location": "Lecture Room C",
       "duration": 1.0
     }
   ],
-  "Tutorials": [
+  "Tutorial": [
     {
       "day_of_week": "WEDNESDAY",
-      "start_time": "10:30",
+      "start_time": "10:30 AM",
       "location": "Tutorial Room A",
       "duration": 1,
       "section": "A"
     },
     {
-      "day_of_week": "WEDNESDAY",
-      "start_time": "11:30",
+      "day_of_week": "FRIDAY",
+      "start_time": "11:30 AM",
       "location": "Tutorial Room B",
       "duration": 1,
       "section": "B"
     }
   ],
-  "Labs": [
+  "Class section - Lab": [
     {
-      "day_of_week": "FRIDAY",
-      "start_time": "13:30",
+      "day_of_week": "THURSDAY",
+      "start_time": "1:30 PM",
       "location": "Lab Room A",
       "duration": 2,
       "section": "A"
     },
     {
       "day_of_week": "FRIDAY",
-      "start_time": "15:30",
+      "start_time": "3:30 PM",
       "location": "Lab Room B",
       "duration": 2,
       "section": "B"
@@ -119,10 +119,46 @@
       "Name": "Assignment 1",
       "DueDate": "2023-02-15",
       "Type": "Assignment",
+      "Weight": 8
+    },
+    {
+      "Name": "Assignment 2",
+      "DueDate": "2023-03-15",
+      "Type": "Assignment",
+      "Weight": 8
+    },
+    {
+      "Name": "Assignment 3",
+      "DueDate": "2023-02-15",
+      "Type": "Assignment",
+      "Weight": 8
+    },
+    {
+      "Name": "Assignment 4",
+      "DueDate": "2023-03-15",
+      "Type": "Assignment",
+      "Weight": 8
+    },
+    {
+      "Name": "Assignment 5",
+      "DueDate": "2023-03-15",
+      "Type": "Assignment",
+      "Weight": 8
+    },
+    {
+      "Name": "Project",
+      "DueDate": "2023-02-15",
+      "Type": "Assignment",
+      "Weight": 25
+    },
+    {
+      "Name": "CSWA Exam",
+      "DueDate": "2023-03-10",
+      "Type": "Exam",
       "Weight": 10
     },
     {
-      "Name": "Midterm Exam",
+      "Name": "Final Exam",
       "DueDate": "2023-03-10",
       "Type": "Exam",
       "Weight": 25
