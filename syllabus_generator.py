@@ -29,6 +29,8 @@ def nth_weekday(n, weekday, month, year):
         if count < n:
             day += 1
     return date(year, month, day)
+
+
 # endregion
 
 # region File loading and date processing
@@ -155,6 +157,7 @@ print(dateSummaryTable)
 
 # endregion
 
+# region Variable initialization
 # Define activity types
 lecture_entry_type = "Class section - Lecture"
 lab_entry_type = "Class section - Lab"
@@ -167,12 +170,12 @@ tutorial_topic_index = {}
 lab_topic_index = {}
 
 # Populate the dictionary for each Tutorial section
-for tutorial in data['Tutorial']:
-    tutorial_topic_index[tutorial['section']] = 0
+for tutorial in data["Tutorial"]:
+    tutorial_topic_index[tutorial["section"]] = 0
 
 # Populate the dictionary for each Lab section
-for lab in data['Class section - Lab']:
-    lab_topic_index[lab['section']] = 0
+for lab in data["Class section - Lab"]:
+    lab_topic_index[lab["section"]] = 0
 
 # Initialize storage for scheduled events
 scheduled_activities = []
@@ -180,6 +183,7 @@ scheduled_activities = []
 # Initialize starting variables
 current_date = term_dates["term_start_date"]
 is_lecture_week = True  # Start with a lecture for the alternating option
+# endregion
 
 while current_date <= term_dates["term_end_date"]:
     # Check if current_date is within the reading week range
@@ -241,7 +245,9 @@ while current_date <= term_dates["term_end_date"]:
                 topic = lab_topics[lab_topic_index[section]]["Topic"]
                 # Construct the full topic description with the section
                 topic_content = lab_topics[lab_topic_index[section]]["Topic"]
-                reference_content = lab_topics[lab_topic_index[section]].get("Reference", "")
+                reference_content = lab_topics[lab_topic_index[section]].get(
+                    "Reference", ""
+                )
 
                 # Construct the full topic description with the section
                 if reference_content:
@@ -279,7 +285,9 @@ while current_date <= term_dates["term_end_date"]:
                 topic = tutorial_topics[tutorial_topic_index[section]]["Topic"]
                 # Construct the full topic description with the section
                 topic_content = tutorial_topics[tutorial_topic_index[section]]["Topic"]
-                reference_content = tutorial_topics[tutorial_topic_index[section]].get("Reference", "")
+                reference_content = tutorial_topics[tutorial_topic_index[section]].get(
+                    "Reference", ""
+                )
 
                 # Construct the full topic description with the section
                 if reference_content:
