@@ -7,7 +7,7 @@
         "lab_start_date": ""
     },
     "UnavailableDates": [],
-    "Lectures": [
+    "Class section - Lecture": [
         {
             "day_of_week": "",
             "start_time": "9:30 AM",
@@ -15,7 +15,7 @@
             "location": ""
         }
     ],
-    "Labs": [
+    "Class section - Lab": [
         {
             "day_of_week": "",
             "start_time": "9:30 AM",
