@@ -187,15 +187,9 @@ scheduled_activities = []
 # Initialize starting variables
 current_date = term_dates["term_start_date"]
 is_lecture_week = True  # Start with a lecture for the alternating option
-is_activity_scheduled = False
-
-# Instance counters for checks:
-total_lecture_times = 0
 # endregion
 
 while current_date <= term_dates["term_end_date"]:
-    # Reset state
-    is_activity_scheduled = False
     # Check if current_date is within the reading week range
     is_within_reading_week = (
         term_dates["reading_week_start"]
@@ -237,10 +231,10 @@ while current_date <= term_dates["term_end_date"]:
                         topic,
                     )
                 )
-                is_activity_scheduled = True
-                total_lecture_times += 1
                 lecture_topic_index += 1
-                
+    if delivery_option == 'Alternating':
+        is_lecture_week = not is_lecture_week
+        current_date += timedelta(days=1)
 
     # Schedule labs
     if data["HasLabs"] and (
@@ -283,7 +277,6 @@ while current_date <= term_dates["term_end_date"]:
                         full_topic_description,
                     )
                 )
-                is_activity_scheduled = True
                 lab_topic_index[section] += 1
 
     # Schedule tutorials
@@ -324,12 +317,7 @@ while current_date <= term_dates["term_end_date"]:
                         full_topic_description,
                     )
                 )
-    # Alternate week delivery mode:
-    if delivery_option == 'Alternating' and is_activity_scheduled:
-        if lab_topic_index[lab["section"]] < len(lab_topics): # if there are unscheduled labs remaining
-            is_lecture_week = not is_lecture_week
-        else:
-            is_lecture_week = True # otherwise stick to lectures for remainder of term
+
     # Advance the date
     current_date += timedelta(days=1)
 
@@ -356,22 +344,21 @@ total_weight = sum([deliverable["Weight"] for deliverable in deliverables])
 print(f"\nCourse {course_code} Deliverables:")
 
 deliverableTable = PrettyTable()
-deliverableTable.field_names = ["Deliverable", "Weight", "Due Date"]
+deliverableTable.field_names = ["Deliverable", "Weight"]
 deliverableTable.align["Deliverable"] = "l"
 
 for index, deliverable in enumerate(deliverables):
     name = deliverable["Name"]
     weight = f"{deliverable['Weight']}%"
-    dueDate = deliverable["DueDate"]
 
     # Check if it's the last iteration
     if index == len(deliverables) - 1:
-        deliverableTable.add_row([name, weight, dueDate], divider=True)
+        deliverableTable.add_row([name, weight], divider=True)
     else:
-        deliverableTable.add_row([name, weight, dueDate])
+        deliverableTable.add_row([name, weight])
 
 # Add the total weight to the table
-deliverableTable.add_row(["TOTAL", f"{total_weight}%", ""])
+deliverableTable.add_row(["TOTAL", f"{total_weight}%"])
 
 print(deliverableTable)
 
@@ -382,6 +369,29 @@ if total_weight != 100:
     )
 else:
     print(f"✅ The total sum of deliverables is {total_weight}%")
+
+# Calculate total number of lecture times available in the term
+total_lecture_times = 0
+current_date = term_dates["term_start_date"]
+
+while current_date <= term_dates["term_end_date"]:
+    # Check if current_date is within the reading week range
+    is_within_reading_week = (
+        term_dates["reading_week_start"]
+        <= current_date
+        < term_dates["reading_week_start"] + timedelta(days=5)
+    )
+
+    # Check if current_date is in the unavailable dates
+    is_unavailable_date = current_date in unavailable_dates
+
+    # Only consider the lecture if the current_date is not within the reading week and is not an unavailable date
+    if not (is_within_reading_week or is_unavailable_date):
+        for lecture in data["Class section - Lecture"]:
+            if current_date.strftime("%A").upper() == lecture["day_of_week"]:
+                total_lecture_times += 1
+
+    current_date += timedelta(days=1)
 
 # Summary and Warnings
 print("\nScheduling Summary:")

@@ -1,39 +1,49 @@
 {
-    "CourseCode": "",
+    "CourseCode": "MME 9624",
     "TermDates": {
-        "term_start_date": "",
-        "term_end_date": "",
-        "reading_week_start": "",
-        "lab_start_date": ""
+        "term_start_date": "2023-09-11",
+        "term_end_date": "2023-12-14",
+        "lab_start_date": "2023-09-23",
+        "reading_week_start": "2023-11-10"
     },
     "UnavailableDates": [],
     "Class section - Lecture": [
         {
-            "day_of_week": "",
-            "start_time": "9:30 AM",
-            "duration": "2:00",
-            "location": ""
+            "day_of_week": "TUESDAY",
+            "start_time": "1:30 PM",
+            "duration": "3:30",
+            "location": "ACEB 3445"
         }
     ],
     "Class section - Lab": [
         {
-            "day_of_week": "",
-            "start_time": "9:30 AM",
-            "duration": "3:00",
-            "location": "",
-            "section": "A"
+            "day_of_week": "TUESDAY",
+            "start_time": "12:30 PM",
+            "duration": "3:30",
+            "location": "ACEB 3435",
+            "section": "1"
         }
     ],
     "LectureTopics": [
         {
-            "Topic": "",
-            "Reference": ""
+            {"Topic": "Introduction", "Reference": ""},
+            {"Topic": "Introduction", "Reference": ""},
+            {"Topic": "Introduction", "Reference": ""},
+            {"Topic": "Introduction", "Reference": ""},
+            {"Topic": "Introduction", "Reference": ""},
+            {"Topic": "Introduction", "Reference": ""},
+            {"Topic": "Introduction", "Reference": ""},
+            {"Topic": "Introduction", "Reference": ""},
         }
     ],
     "LabTopics": [
         {
-            "Topic": "",
-            "Reference": ""
+            {"Topic": "Introduction", "Reference": ""},
+            {"Topic": "Introduction", "Reference": ""},
+            {"Topic": "Introduction", "Reference": ""},
+            {"Topic": "Introduction", "Reference": ""},
+            {"Topic": "Introduction", "Reference": ""},
+            {"Topic": "Introduction", "Reference": ""},
         }
     ],
     "Deliverables": [
