@@ -156,14 +156,23 @@ print(dateSummaryTable)
 # endregion
 
 # Define activity types
-lesson_entry_type = "Class section - Lecture"
+lecture_entry_type = "Class section - Lecture"
 lab_entry_type = "Class section - Lab"
 tutorial_entry_type = "Tutorial"
 
-# Initialize indices for topics
+# Initialize indices for lectures
 lecture_topic_index = 0
-tutorial_topic_index = 0
-lab_topic_index = 0
+# Initialize an empty dictionary for tutorial_topic_index
+tutorial_topic_index = {}
+lab_topic_index = {}
+
+# Populate the dictionary for each Tutorial section
+for tutorial in data['Tutorial']:
+    tutorial_topic_index[tutorial['section']] = 0
+
+# Populate the dictionary for each Lab section
+for lab in data['Class section - Lab']:
+    lab_topic_index[lab['section']] = 0
 
 # Initialize storage for scheduled events
 scheduled_activities = []
@@ -192,7 +201,7 @@ while current_date <= term_dates["term_end_date"]:
     if delivery_option == "Conventional" or (
         delivery_option == "Alternating" and is_lecture_week
     ):
-        for lecture in data[lesson_entry_type]:
+        for lecture in data[lecture_entry_type]:
             if current_date.strftime("%A").upper() == lecture[
                 "day_of_week"
             ] and lecture_topic_index < len(lecture_topics):
@@ -210,7 +219,7 @@ while current_date <= term_dates["term_end_date"]:
                         start_time,
                         end_time,
                         location,
-                        lesson_entry_type,
+                        lecture_entry_type,
                         topic,
                     )
                 )
@@ -224,15 +233,15 @@ while current_date <= term_dates["term_end_date"]:
         for lab in data[lab_entry_type]:
             if current_date.strftime("%A").upper() == lab[
                 "day_of_week"
-            ] and lab_topic_index < len(lab_topics):
+            ] and lab_topic_index[lab["section"]] < len(lab_topics):
                 start_time = lab["start_time"]
                 duration = lab["duration"]
                 location = lab["location"]
                 section = lab["section"]
-                topic = lab_topics[lab_topic_index]["Topic"]
+                topic = lab_topics[lab_topic_index[section]]["Topic"]
                 # Construct the full topic description with the section
-                topic_content = lab_topics[lab_topic_index]["Topic"]
-                reference_content = lab_topics[lab_topic_index].get("Reference", "")
+                topic_content = lab_topics[lab_topic_index[section]]["Topic"]
+                reference_content = lab_topics[lab_topic_index[section]].get("Reference", "")
 
                 # Construct the full topic description with the section
                 if reference_content:
@@ -255,22 +264,22 @@ while current_date <= term_dates["term_end_date"]:
                         full_topic_description,
                     )
                 )
-                lab_topic_index += 1
+                lab_topic_index[section] += 1
 
     # Schedule tutorials
     if data["HasTutorials"]:
         for tutorial in data[tutorial_entry_type]:
             if current_date.strftime("%A").upper() == tutorial[
                 "day_of_week"
-            ] and tutorial_topic_index < len(tutorial_topics):
+            ] and tutorial_topic_index[tutorial["section"]] < len(tutorial_topics):
                 start_time = tutorial["start_time"]
                 duration = tutorial["duration"]
                 location = tutorial["location"]
                 section = tutorial["section"]
-                topic = tutorial_topics[tutorial_topic_index]["Topic"]
+                topic = tutorial_topics[tutorial_topic_index[section]]["Topic"]
                 # Construct the full topic description with the section
-                topic_content = tutorial_topics[tutorial_topic_index]["Topic"]
-                reference_content = tutorial_topics[tutorial_topic_index].get("Reference", "")
+                topic_content = tutorial_topics[tutorial_topic_index[section]]["Topic"]
+                reference_content = tutorial_topics[tutorial_topic_index[section]].get("Reference", "")
 
                 # Construct the full topic description with the section
                 if reference_content:
@@ -293,7 +302,7 @@ while current_date <= term_dates["term_end_date"]:
                         full_topic_description,
                     )
                 )
-                tutorial_topic_index += 1
+                tutorial_topic_index[section] += 1
 
     # Advance the date
     current_date += timedelta(days=1)
