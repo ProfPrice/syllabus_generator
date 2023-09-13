@@ -233,7 +233,6 @@ while current_date <= term_dates["term_end_date"]:
                         start_time,
                         duration,
                         lecture_entry_type,
-                        #"Meeting",
                         location
                     )
                 )
@@ -282,7 +281,6 @@ while current_date <= term_dates["term_end_date"]:
                         start_time,
                         duration,
                         lab_entry_type,
-                        #"Meeting",
                         location
                     )
                 )
@@ -326,7 +324,6 @@ while current_date <= term_dates["term_end_date"]:
                         start_time,
                         duration,
                         tutorial_entry_type,
-                        #"Meeting",
                         location
                     )
                 )
