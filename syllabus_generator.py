@@ -16,7 +16,6 @@ def print_warning(message):
 def convert_date_format(input_date):
     return input_date.strftime('%m/%d/%Y')
 
-
 def nth_weekday(n, weekday, month, year):
     """
     Returns the date of the nth occurrence of the weekday in the specified month and year.
@@ -33,7 +32,6 @@ def nth_weekday(n, weekday, month, year):
         if count < n:
             day += 1
     return date(year, month, day)
-
 
 # endregion
 
@@ -182,7 +180,7 @@ if data["HasTutorials"]:
 
 # Populate the dictionary for each Lab section
 if data["HasLabs"]:
-    for lab in data["Class section - Lab"]:
+    for lab in data[lab_entry_type]:
         lab_topic_index[lab["section"]] = 0
 
 # Initialize storage for scheduled events
@@ -227,11 +225,6 @@ while current_date <= term_dates["term_end_date"]:
                 duration = lecture["duration"]
                 location = lecture["location"]
                 topic = lecture_topics[lecture_topic_index]["Topic"]
-                # end_time = (
-                #     datetime.strptime(start_time, "%I:%M %p")
-                #     + timedelta(hours=duration)
-                # ).strftime("%I:%M %p")
-                # want: Title, Description, Date, Start, Duration, Type, Location
                 scheduled_activities.append(
                     (
                         topic,
@@ -239,7 +232,8 @@ while current_date <= term_dates["term_end_date"]:
                         current_date,
                         start_time,
                         duration,
-                        "Meeting",
+                        lecture_entry_type,
+                        #"Meeting",
                         location
                     )
                 )
@@ -280,10 +274,6 @@ while current_date <= term_dates["term_end_date"]:
                     )
                 else:
                     full_topic_description = f"{topic_content} (Section {section})"
-                # end_time = (
-                #     datetime.strptime(start_time, "%I:%M %p")
-                #     + timedelta(hours=duration)
-                # ).strftime("%I:%M %p")
                 scheduled_activities.append(
                     (
                         full_topic_description,
@@ -291,7 +281,8 @@ while current_date <= term_dates["term_end_date"]:
                         current_date,
                         start_time,
                         duration,
-                        "Meeting",
+                        lab_entry_type,
+                        #"Meeting",
                         location
                     )
                 )
@@ -327,10 +318,6 @@ while current_date <= term_dates["term_end_date"]:
                     )
                 else:
                     full_topic_description = f"{topic_content} (Section {section})"
-                # end_time = (
-                #     datetime.strptime(start_time, "%I:%M %p")
-                #     + timedelta(hours=duration)
-                # ).strftime("%I:%M %p")
                 scheduled_activities.append(
                     (
                         full_topic_description,
@@ -338,7 +325,8 @@ while current_date <= term_dates["term_end_date"]:
                         current_date,
                         start_time,
                         duration,
-                        "Meeting",
+                        tutorial_entry_type,
+                        #"Meeting",
                         location
                     )
                 )
@@ -368,6 +356,9 @@ with open(output_path, "w", newline="") as csvfile:
         
         # Update the date format
         activity_list[2] = convert_date_format(activity_list[2])
+        
+        # Uncomment for OWL calendar export:
+        # activity_list[5] = "Meeting"
         
         # Write the modified activity to the CSV
         output_csv.writerow(activity_list)
