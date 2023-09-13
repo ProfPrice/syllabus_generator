@@ -37,7 +37,7 @@
       "start_time": "5:30 PM",
       "location": "ACEB 2415",
       "duration": "3:00",
-      "section": "004"
+      "section": "002"
     },
     {
       "day_of_week": "THURSDAY",
@@ -51,7 +51,7 @@
       "start_time": "5:30 PM",
       "location": "ACEB 2415",
       "duration": "3:00",
-      "section": "002"
+      "section": "004"
     }
   ],
   "LectureTopics": [
