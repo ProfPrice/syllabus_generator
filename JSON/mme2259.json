@@ -16,19 +16,19 @@
       "day_of_week": "WEDNESDAY",
       "start_time": "9:30 AM",
       "location": "HSB 236",
-      "duration": 1.0
+      "duration": "1:00"
     },
     {
       "day_of_week": "WEDNESDAY",
       "start_time": "10:30 AM",
       "location": "HSB 236",
-      "duration": 1.0
+      "duration": "1:00"
     },
     {
       "day_of_week": "FRIDAY",
       "start_time": "9:30 AM",
       "location": "HSB 236",
-      "duration": 1.0
+      "duration": "1:00"
     }
   ],
   "Class section - Lab": [
@@ -36,31 +36,30 @@
       "day_of_week": "THURSDAY",
       "start_time": "5:30 PM",
       "location": "ACEB 2415",
-      "duration": 3,
-      "section": "1401"
+      "duration": "3:00",
+      "section": "004"
     },
     {
       "day_of_week": "THURSDAY",
       "start_time": "1:30 PM",
       "location": "ACEB 2415",
-      "duration": 3,
-      "section": "1492"
+      "duration": "3:00",
+      "section": "003"
     },
     {
       "day_of_week": "TUESDAY",
       "start_time": "5:30 PM",
       "location": "ACEB 2415",
-      "duration": 3,
-      "section": "3689"
+      "duration": "3:00",
+      "section": "002"
     }
   ],
   "LectureTopics": [
     {"Topic": "Introduction", "Reference": ""},
-    {"Topic": "Term-Project Introduction, Team Creation, and Monday.com", "Reference": ""},
-    {"Topic": "CSWA Exam: Certified SOLIDWORKS Associate in Mechanical Design", "Reference": ""},
     {"Topic": "Engineering Design Process and Customer Requirements", "Reference": ""},
     {"Topic": "Product Design Specifications (PDS)", "Reference": ""},
     {"Topic": "Quality Function Deployment (QFD)", "Reference": ""},
+    {"Topic": "CSWA Exam: Certified SOLIDWORKS Associate in Mechanical Design; Term-Project Introduction, Team Creation, and Monday.com", "Reference": ""},
     {"Topic": "Planning and Scheduling a Design Project I: Work Breakdown Structure (WBS)", "Reference": ""},
     {"Topic": "Planning and Scheduling a Design Project II: Resource estimation techniques, Gantt charts", "Reference": ""},
     {"Topic": "Planning and Scheduling a Design Project III: Network diagrams, Critical path", "Reference": ""},
@@ -93,66 +92,64 @@
     {"Topic": "Review", "Reference": ""}
   ],
   "LabTopics": [
-    {"Topic": "Lab Setup and Basics", "Reference": ""},
-    {"Topic": "Working with SOLIDWORKS", "Reference": ""},
-    {"Topic": "Advanced Design Techniques", "Reference": ""},
-    {"Topic": "Advanced Design Techniques", "Reference": ""},
-    {"Topic": "Advanced Design Techniques", "Reference": ""},
-    {"Topic": "Advanced Design Techniques", "Reference": ""},
-    {"Topic": "Advanced Design Techniques", "Reference": ""},
-    {"Topic": "Advanced Design Techniques", "Reference": ""},
-    {"Topic": "Advanced Design Techniques", "Reference": ""},
-    {"Topic": "Advanced Design Techniques", "Reference": ""},
-    {"Topic": "Advanced Design Techniques", "Reference": ""},
-    {"Topic": "Advanced Design Techniques", "Reference": ""},
-    {"Topic": "Final Lab Assessment", "Reference": ""}
+    {"Topic": "Identify Customer Needs", "Reference": ""},
+    {"Topic": "Problem Statement, Product Design Specifications (PDS)", "Reference": ""},
+    {"Topic": "QFD, Planning (WBS), and Scheduling (GANNT, CPM)", "Reference": ""},
+    {"Topic": "Design Review - Phase 1: Specifications", "Reference": ""},
+    {"Topic": "Concept Generation and Evaluation", "Reference": ""},
+    {"Topic": "CSWA Exam", "Reference": ""},
+    {"Topic": "Detail Design: Design Evaluation and Part Modelling", "Reference": ""},
+    {"Topic": "Detailed Design: Part Modelling and Assembly", "Reference": ""},
+    {"Topic": "Design Review - Phase 3: Detailed Design", "Reference": ""},
+    {"Topic": "Detail Design: Drawings and Motion Simulation", "Reference": ""},
+    {"Topic": "Finalize Project Documentation", "Reference": ""}
   ],
   "Deliverables": [
     {
-      "Name": "Assignment 1",
-      "DueDate": "2023-02-15",
+      "Name": "SolidWorks Assignment 1: Sketching and Primary Features",
+      "DueDate": "2023-09-25",
       "Type": "Assignment",
       "Weight": 8
     },
     {
-      "Name": "Assignment 2",
-      "DueDate": "2023-03-15",
+      "Name": "SolidWorks Assignment 2: Secondary Features and Parts",
+      "DueDate": "2023-10-02",
       "Type": "Assignment",
       "Weight": 8
     },
     {
-      "Name": "Assignment 3",
-      "DueDate": "2023-02-15",
+      "Name": "SolidWorks Assignment 3: Assemblies",
+      "DueDate": "2023-10-09",
       "Type": "Assignment",
       "Weight": 8
     },
     {
-      "Name": "Assignment 4",
-      "DueDate": "2023-03-15",
+      "Name": "SolidWorks Assignment 4: Engineering Drawings",
+      "DueDate": "2023-10-16",
       "Type": "Assignment",
       "Weight": 8
     },
     {
-      "Name": "Assignment 5",
-      "DueDate": "2023-03-15",
+      "Name": "SolidWorks Assignment 5: Parametric Design using Equations, Configurations, and Design Tables",
+      "DueDate": "2023-11-07",
       "Type": "Assignment",
       "Weight": 8
     },
     {
-      "Name": "Project",
-      "DueDate": "2023-02-15",
+      "Name": "Design Project",
+      "DueDate": "2023-12-08",
       "Type": "Assignment",
       "Weight": 25
     },
     {
-      "Name": "CSWA Exam",
-      "DueDate": "2023-03-10",
+      "Name": "CSWA Exam (week of)",
+      "DueDate": "2023-10-23",
       "Type": "Exam",
       "Weight": 10
     },
     {
-      "Name": "Final Exam",
-      "DueDate": "2023-04-10",
+      "Name": "Final Exam (date TBD)",
+      "DueDate": "2023-12-11",
       "Type": "Exam",
       "Weight": 25
     }

@@ -12,6 +12,10 @@ from prettytable import PrettyTable
 def print_warning(message):
     print(f"❌ Warning: {message}")
 
+# Function to convert date format from YYYY-MM-DD to mm/dd/yyyy
+def convert_date_format(input_date):
+    return input_date.strftime('%m/%d/%Y')
+
 
 def nth_weekday(n, weekday, month, year):
     """
@@ -223,18 +227,20 @@ while current_date <= term_dates["term_end_date"]:
                 duration = lecture["duration"]
                 location = lecture["location"]
                 topic = lecture_topics[lecture_topic_index]["Topic"]
-                end_time = (
-                    datetime.strptime(start_time, "%I:%M %p")
-                    + timedelta(hours=duration)
-                ).strftime("%I:%M %p")
+                # end_time = (
+                #     datetime.strptime(start_time, "%I:%M %p")
+                #     + timedelta(hours=duration)
+                # ).strftime("%I:%M %p")
+                # want: Title, Description, Date, Start, Duration, Type, Location
                 scheduled_activities.append(
                     (
+                        topic,
+                        "",
                         current_date,
                         start_time,
-                        end_time,
-                        location,
-                        lecture_entry_type,
-                        topic,
+                        duration,
+                        "Meeting",
+                        location
                     )
                 )
                 is_activity_scheduled = True
@@ -243,10 +249,15 @@ while current_date <= term_dates["term_end_date"]:
                 
 
     # Schedule labs
+    is_within_lab_window = (
+        term_dates["lab_start_date"]
+        <= current_date
+        < term_dates["term_end_date"]
+    )
     if data["HasLabs"] and (
         delivery_option == "Conventional"
         or (delivery_option == "Alternating" and not is_lecture_week)
-    ):
+    ) and is_within_lab_window:
         for lab in data[lab_entry_type]:
             if current_date.strftime("%A").upper() == lab[
                 "day_of_week"
@@ -269,25 +280,31 @@ while current_date <= term_dates["term_end_date"]:
                     )
                 else:
                     full_topic_description = f"{topic_content} (Section {section})"
-                end_time = (
-                    datetime.strptime(start_time, "%I:%M %p")
-                    + timedelta(hours=duration)
-                ).strftime("%I:%M %p")
+                # end_time = (
+                #     datetime.strptime(start_time, "%I:%M %p")
+                #     + timedelta(hours=duration)
+                # ).strftime("%I:%M %p")
                 scheduled_activities.append(
                     (
+                        full_topic_description,
+                        "",
                         current_date,
                         start_time,
-                        end_time,
-                        location,
-                        lab_entry_type,
-                        full_topic_description,
+                        duration,
+                        "Meeting",
+                        location
                     )
                 )
                 is_activity_scheduled = True
                 lab_topic_index[section] += 1
 
     # Schedule tutorials
-    if data["HasTutorials"]:
+    is_within_tutorial_window = (
+        term_dates["tutorial_start_date"]
+        <= current_date
+        < term_dates["term_end_date"]
+    )
+    if data["HasTutorials"] and is_within_tutorial_window:
         for tutorial in data[tutorial_entry_type]:
             if current_date.strftime("%A").upper() == tutorial[
                 "day_of_week"
@@ -310,18 +327,19 @@ while current_date <= term_dates["term_end_date"]:
                     )
                 else:
                     full_topic_description = f"{topic_content} (Section {section})"
-                end_time = (
-                    datetime.strptime(start_time, "%I:%M %p")
-                    + timedelta(hours=duration)
-                ).strftime("%I:%M %p")
+                # end_time = (
+                #     datetime.strptime(start_time, "%I:%M %p")
+                #     + timedelta(hours=duration)
+                # ).strftime("%I:%M %p")
                 scheduled_activities.append(
                     (
+                        full_topic_description,
+                        "",
                         current_date,
                         start_time,
-                        end_time,
-                        location,
-                        tutorial_entry_type,
-                        full_topic_description,
+                        duration,
+                        "Meeting",
+                        location
                     )
                 )
     # Alternate week delivery mode:
@@ -334,23 +352,31 @@ while current_date <= term_dates["term_end_date"]:
     current_date += timedelta(days=1)
 
 # Sort the scheduled activities by date and start time
-scheduled_activities.sort(key=lambda x: (x[0], datetime.strptime(x[1], "%I:%M %p")))
+#scheduled_activities.sort(key=lambda x: (x[0], datetime.strptime(x[1], "%I:%M %p")))
 
 
 # region Write sorted activities to CSV
+# Need date string in mm/dd/yyyy format
 with open(output_path, "w", newline="") as csvfile:
     output_csv = csv.writer(csvfile)
     output_csv.writerow(
-        ["Date", "Start Time", "End Time", "Location", "Type", "Description"]
+        ["Title", "Description", "Date", "Start", "Duration","Type","Location"]
     )
     for activity in scheduled_activities:
-        output_csv.writerow(activity)
+        # Convert the tuple to a list to modify its contents
+        activity_list = list(activity)
+        
+        # Update the date format
+        activity_list[2] = convert_date_format(activity_list[2])
+        
+        # Write the modified activity to the CSV
+        output_csv.writerow(activity_list)
 # endregion
 
 # region Summary tables and validation checks
 # Display summary
 course_code = data["CourseCode"]
-deliverables = data["Deliverables"]
+deliverables = sorted(data["Deliverables"], key=lambda x: x["DueDate"])
 total_weight = sum([deliverable["Weight"] for deliverable in deliverables])
 
 print(f"\nCourse {course_code} Deliverables:")
@@ -374,6 +400,9 @@ for index, deliverable in enumerate(deliverables):
 deliverableTable.add_row(["TOTAL", f"{total_weight}%", ""])
 
 print(deliverableTable)
+
+with open('deliverables.csv', 'w', newline='') as f_output:
+    f_output.write(deliverableTable.get_string())
 
 # Check if total weight of deliverables is not 100%
 if total_weight != 100:
@@ -433,7 +462,8 @@ def display_activities(activities):
     # Grouping activities by type
     activity_groups = {}
     for activity in activities:
-        current_date, _, _, _, entry_type, topic = activity
+
+        topic,_,current_date,_,_,entry_type,_ = activity
         if entry_type not in activity_groups:
             activity_groups[entry_type] = []
         activity_groups[entry_type].append((topic, current_date))
