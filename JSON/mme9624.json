@@ -14,7 +14,7 @@
         {
             "day_of_week": "TUESDAY",
             "start_time": "1:30 PM",
-            "duration": 2.0,
+            "duration": "2:00",
             "location": "ACEB 3445"
         }
     ],
@@ -22,7 +22,7 @@
         {
             "day_of_week": "TUESDAY",
             "start_time": "12:30 PM",
-            "duration": 3.5,
+            "duration": "3:00",
             "location": "ACEB 3435",
             "section": "1"
         }

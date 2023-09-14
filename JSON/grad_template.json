@@ -7,6 +7,7 @@
         "reading_week_start": "2023-11-10"
     },
     "UnavailableDates": [],
+    "DeliveryOption": "Alternating",
     "Class section - Lecture": [
         {
             "day_of_week": "TUESDAY",
@@ -53,6 +54,5 @@
             "type": "",
             "weight": 0
         }
-    ],
-    "DeliveryOption": "Alternating"
+    ]
 }

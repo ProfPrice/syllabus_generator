@@ -1,13 +1,12 @@
-Date,Start Time,End Time,Location,Type,Description
-2023-09-12,1:30 PM,03:30 PM,ACEB 3445,Class section - Lecture,Introduction and Term Project: Unconventional actuator technologies; Stepper Motors
-2023-09-19,12:30 PM,04:00 PM,ACEB 3435,Class section - Lab,Lab 1: Stepper Motors (Section 1)
-2023-09-26,1:30 PM,03:30 PM,ACEB 3445,Class section - Lecture,DC Motors
-2023-10-03,12:30 PM,04:00 PM,ACEB 3435,Class section - Lab,Lab 4: BLDC Motor Control (Section 1)
-2023-10-10,1:30 PM,03:30 PM,ACEB 3445,Class section - Lecture,Fluidic Actuators
-2023-10-17,12:30 PM,04:00 PM,ACEB 3435,Class section - Lab,Lab 5: Pneumatic Control (Section 1)
-2023-10-24,1:30 PM,03:30 PM,ACEB 3445,Class section - Lecture,Shape Memory Materials
-2023-11-07,12:30 PM,04:00 PM,ACEB 3435,Class section - Lab,Lab 6: SMA Control (Section 1)
-2023-11-14,1:30 PM,03:30 PM,ACEB 3445,Class section - Lecture,Mechanical Dissection
-2023-11-21,1:30 PM,03:30 PM,ACEB 3445,Class section - Lecture,Sensors
-2023-11-28,1:30 PM,03:30 PM,ACEB 3445,Class section - Lecture,Actuator Selection & Control
-2023-12-05,1:30 PM,03:30 PM,ACEB 3445,Class section - Lecture,Project Presentations
+Title,Description,Date,Start,Duration,Type,Location
+Introduction and Term Project: Unconventional actuator technologies; Stepper Motors,,09/12/2023,1:30 PM,2:00,Meeting,ACEB 3445
+Lab 1: Stepper Motors,,09/26/2023,12:30 PM,3:00,Meeting,ACEB 3435
+DC Motors,,10/03/2023,1:30 PM,2:00,Meeting,ACEB 3445
+Lab 4: BLDC Motor Control,,10/10/2023,12:30 PM,3:00,Meeting,ACEB 3435
+Fluidic Actuators,,10/17/2023,1:30 PM,2:00,Meeting,ACEB 3445
+Lab 5: Pneumatic Control,,10/24/2023,12:30 PM,3:00,Meeting,ACEB 3435
+Shape Memory Materials,,11/07/2023,1:30 PM,2:00,Meeting,ACEB 3445
+Lab 6: SMA Control,,11/14/2023,12:30 PM,3:00,Meeting,ACEB 3435
+Mechanical Dissection,,11/21/2023,1:30 PM,2:00,Meeting,ACEB 3445
+Sensors,,11/28/2023,1:30 PM,2:00,Meeting,ACEB 3445
+Actuator Selection & Control,,12/05/2023,1:30 PM,2:00,Meeting,ACEB 3445

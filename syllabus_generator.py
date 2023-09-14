@@ -43,7 +43,7 @@ default_dir = os.path.join(os.getcwd(), 'JSON')
 json_file_path = filedialog.askopenfilename(initialdir=default_dir, title="Select the JSON course data file", filetypes=[("JSON files", "*.json")]) """
 # Hardcoded relative file path
 json_file_path = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "JSON", "mme2259.json"
+    os.path.dirname(os.path.abspath(__file__)), "JSON", "mme9624.json"
 )
 
 # Derive the output filename from the input JSON filename
@@ -288,11 +288,12 @@ while current_date <= term_dates["term_end_date"]:
                 lab_topic_index[section] += 1
 
     # Schedule tutorials
-    is_within_tutorial_window = (
+    is_within_tutorial_window = data["HasTutorials"] and (
         term_dates["tutorial_start_date"]
         <= current_date
         < term_dates["term_end_date"]
     )
+
     if data["HasTutorials"] and is_within_tutorial_window:
         for tutorial in data[tutorial_entry_type]:
             if current_date.strftime("%A").upper() == tutorial[
@@ -355,7 +356,7 @@ with open(output_path, "w", newline="") as csvfile:
         activity_list[2] = convert_date_format(activity_list[2])
         
         # Uncomment for OWL calendar export:
-        # activity_list[5] = "Meeting"
+        activity_list[5] = "Meeting"
         
         # Write the modified activity to the CSV
         output_csv.writerow(activity_list)
