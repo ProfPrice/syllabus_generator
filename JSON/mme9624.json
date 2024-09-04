@@ -1,102 +1,138 @@
 {
-    "CourseCode": "MME 9624",
-    "TermDates": {
-        "term_start_date": "2023-09-11",
-        "term_end_date": "2023-12-08",
-        "lab_start_date": "2023-09-19",
-        "reading_week_start": "2023-10-30"
-    },
-    "UnavailableDates": [],
-    "DeliveryOption": "Alternating",
-    "HasTutorials": false,
-    "HasLabs": true,
-    "Class section - Lecture": [
+    "Lab": [
         {
-            "day_of_week": "TUESDAY",
-            "start_time": "1:30 PM",
-            "duration": "2:00",
-            "location": "ACEB 3445"
-        }
-    ],
-    "Class section - Lab": [
-        {
-            "day_of_week": "TUESDAY",
-            "start_time": "12:30 PM",
+            "day_of_week": "THURSDAY",
             "duration": "3:00",
             "location": "ACEB 3435",
-            "section": "1"
+            "section": "1",
+            "start_time": "9:30 AM"
         }
     ],
-    "LectureTopics": [
-        {"Topic": "Introduction and Term Project: Unconventional actuator technologies; Stepper Motors", "Reference": ""},
-        {"Topic": "DC Motors", "Reference": ""},
-        {"Topic": "Fluidic Actuators", "Reference": ""},
-        {"Topic": "Shape Memory Materials", "Reference": ""},
-        {"Topic": "Mechanical Dissection", "Reference": ""},
-        {"Topic": "Sensors", "Reference": ""},
-        {"Topic": "Actuator Selection & Control", "Reference": ""},
-        {"Topic": "Project Presentations", "Reference": ""}
+    "Lecture": [
+        {
+            "day_of_week": "THURSDAY",
+            "duration": "2:00",
+            "location": "ACEB 1415",
+            "start_time": "10:30 AM"
+        }
     ],
-    "LabTopics": [
-        {"Topic": "Lab 1: Stepper Motors", "Reference": ""},
-        {"Topic": "Lab 4: BLDC Motor Control", "Reference": ""},
-        {"Topic": "Lab 5: Pneumatic Control", "Reference": ""},
-        {"Topic": "Lab 6: SMA Control", "Reference": ""}
-    ],
+    "CourseCode": "MME 9624",
     "Deliverables": [
         {
+            "DueDate": "2024-10-02",
             "Name": "Assignment 1: Electric Motors",
-            "DueDate": "2023-10-02",
             "Type": "Assignment",
             "Weight": 7.5
         },
         {
+            "DueDate": "2024-10-23",
             "Name": "Assignment 2: Fluidic Systems",
-            "DueDate": "2023-10-23",
             "Type": "Assignment",
             "Weight": 7.5
         },
         {
+            "DueDate": "2024-09-19",
             "Name": "Lab 1: Stepper Motors",
-            "DueDate": "2023-09-19",
             "Type": "Lab",
             "Weight": 7.5
         },
         {
-            "Name": "Lab 4: BLDC Motor Control",
-            "DueDate": "2023-10-03",
+            "DueDate": "2024-10-03",
+            "Name": "Lab 2: BLDC Motor Control",
             "Type": "Lab",
             "Weight": 7.5
         },
         {
-            "Name": "Lab 5: Pneumatic Control",
-            "DueDate": "2023-10-17",
+            "DueDate": "2024-10-24",
+            "Name": "Lab 3: Pneumatic Control",
             "Type": "Lab",
             "Weight": 7.5
         },
         {
-            "Name": "Lab 6: SMA Control",
-            "DueDate": "2023-11-07",
+            "DueDate": "2024-11-07",
+            "Name": "Lab 4: SMA Control",
             "Type": "Lab",
             "Weight": 7.5
         },
         {
+            "DueDate": "2024-12-05",
             "Name": "Project Presentation",
-            "DueDate": "2023-12-05",
             "Type": "Report",
             "Weight": 5
         },
         {
+            "DueDate": "2024-12-05",
             "Name": "Project Report",
-            "DueDate": "2023-12-05",
             "Type": "Report",
             "Weight": 20
         },
         {
+            "DueDate": "2024-12-05",
             "Name": "Final Exam (Distributed)",
-            "DueDate": "2023-12-05",
             "Type": "Exam",
             "Weight": 30
         }
-    ]
+    ],
+    "DeliveryOption": "Alternating",
+    "HasLabs": true,
+    "HasTutorials": false,
+    "LabTopics": [
+        {
+            "Reference": "",
+            "Topic": "Stepper Motors"
+        },
+        {
+            "Reference": "",
+            "Topic": "BLDC Motor Control"
+        },
+        {
+            "Reference": "",
+            "Topic": "Pneumatic Control"
+        },
+        {
+            "Reference": "",
+            "Topic": "SMA Control"
+        }
+    ],
+    "LectureTopics": [
+        {
+            "Reference": "",
+            "Topic": "Introduction; Stepper Motors"
+        },
+        {
+            "Reference": "",
+            "Topic": "DC Motors"
+        },
+        {
+            "Reference": "",
+            "Topic": "Fluidic Actuators"
+        },
+        {
+            "Reference": "",
+            "Topic": "Shape Memory Materials"
+        },
+        {
+            "Reference": "",
+            "Topic": "Mechanical Dissection"
+        },
+        {
+            "Reference": "",
+            "Topic": "Sensors"
+        },
+        {
+            "Reference": "",
+            "Topic": "Actuator Selection & Control"
+        },
+        {
+            "Reference": "",
+            "Topic": "Project Presentations"
+        }
+    ],
+    "TermDates": {
+        "lab_start_date": "2024-09-16",
+        "reading_week_start": "2024-10-14",
+        "term_end_date": "2024-12-08",
+        "term_start_date": "2024-09-09"
+    },
+    "UnavailableDates": []
 }

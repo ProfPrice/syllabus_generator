@@ -1,3 +1,7 @@
+#TODO: Iterate over each lab and tutorial section when checking for unscheduled activities
+#TODO: Compute deliverable due dates based on the prerequisites (lectures, labs, term dates)
+#TODO: Validate deliverable due dates
+
 import json
 import csv
 from datetime import datetime, date, timedelta
@@ -6,7 +10,7 @@ from tkinter import filedialog
 import os
 from dateutil.easter import easter
 from prettytable import PrettyTable
-
+from ics import Calendar, Event
 
 # region Helpers
 def print_warning(message):
@@ -163,8 +167,8 @@ print(dateSummaryTable)
 
 # region Variable initialization
 # Define activity types
-lecture_entry_type = "Class section - Lecture"
-lab_entry_type = "Class section - Lab"
+lecture_entry_type = "Lecture"
+lab_entry_type = "Lab"
 tutorial_entry_type = "Tutorial"
 
 # Initialize indices for lectures
@@ -268,11 +272,23 @@ while current_date <= term_dates["term_end_date"]:
 
                 # Construct the full topic description with the section
                 if reference_content:
-                    full_topic_description = (
-                        f"{topic_content} [{reference_content}] (Section {section})"
-                    )
+                    if len(data[lab_entry_type])>1:
+                        full_topic_description = (
+                            f"{topic_content} [{reference_content}] (Section {section})"
+                        )
+                    else:
+                        full_topic_description = (
+                            f"{topic_content} [{reference_content}]"
+                        )
                 else:
-                    full_topic_description = f"{topic_content} (Section {section})"
+                    if len(data[lab_entry_type])>1:
+                        full_topic_description = (
+                            f"{topic_content} (Section {section})"
+                        )
+                    else:
+                        full_topic_description = (
+                            f"{topic_content}"
+                        )
                 scheduled_activities.append(
                     (
                         full_topic_description,
@@ -312,11 +328,23 @@ while current_date <= term_dates["term_end_date"]:
 
                 # Construct the full topic description with the section
                 if reference_content:
-                    full_topic_description = (
-                        f"{topic_content} [{reference_content}] (Section {section})"
-                    )
+                    if len(data[lab_entry_type])>1:
+                        full_topic_description = (
+                            f"{topic_content} [{reference_content}] (Section {section})"
+                        )
+                    else:
+                        full_topic_description = (
+                            f"{topic_content} [{reference_content}]"
+                        )
                 else:
-                    full_topic_description = f"{topic_content} (Section {section})"
+                    if len(data[lab_entry_type])>1:
+                        full_topic_description = (
+                            f"{topic_content} (Section {section})"
+                        )
+                    else:
+                        full_topic_description = (
+                            f"{topic_content}"
+                        )
                 scheduled_activities.append(
                     (
                         full_topic_description,
@@ -339,7 +367,6 @@ while current_date <= term_dates["term_end_date"]:
 
 # Sort the scheduled activities by date and start time
 #scheduled_activities.sort(key=lambda x: (x[0], datetime.strptime(x[1], "%I:%M %p")))
-
 
 # region Write sorted activities to CSV
 # Need date string in mm/dd/yyyy format
@@ -415,11 +442,10 @@ if data["HasTutorials"]:
     )
 if data["HasLabs"]:
     scheduleSummaryTable.add_row(
-        ["Labs (/§)", lab_topic_index, len(lab_topics)])
+        ["Labs (/§)", lab_topic_index[lab["section"]], len(lab_topics)])
 
 # Print the scheduleSummaryTable
 print(scheduleSummaryTable)
-
 
 # Check for unused lecture times
 if total_lecture_times > len(lecture_topics):
@@ -445,7 +471,6 @@ elif lecture_topic_index > len(lecture_topics):
         f"More lectures were scheduled than available topics. {lecture_topic_index - len(lecture_topics)} extra lectures were scheduled without topics."
     )
 
-
 # Displaying scheduled activities using PrettyTable
 def display_activities(activities):
     # Grouping activities by type
@@ -466,7 +491,115 @@ def display_activities(activities):
             table.add_row(list(entry))
         print(f"\n{activity_type}\n{table}")
 
-
 # Invoke the function to display activities
 display_activities(scheduled_activities)
 # endregion
+
+from ics import Calendar, Event
+from datetime import datetime, timedelta
+import os
+import pytz  # For handling timezones
+
+# Helper function to get a unique filename
+def get_unique_filename(base_filename: str, extension: str = ".ics", output_dir: str = "Output"):
+    """
+    Returns a unique filename by appending a number if the file already exists in the output directory.
+
+    :param base_filename: The base filename without extension.
+    :param extension: The file extension.
+    :param output_dir: The output directory where the file should be saved.
+    :return: A unique filename within the output directory.
+    """
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)  # Ensure the Output directory exists
+    
+    counter = 1
+    filename = f"{base_filename}{extension}"
+    output_path = os.path.join(output_dir, filename)
+    
+    while os.path.exists(output_path):
+        filename = f"{base_filename}_{counter}{extension}"
+        output_path = os.path.join(output_dir, filename)
+        counter += 1
+    
+    return output_path
+
+# Function to parse time and duration from strings
+def parse_time_and_duration(start_time: str, duration: str):
+    """
+    Parses start time and duration strings to proper time and timedelta objects.
+
+    :param start_time: A string in 'HH:MM AM/PM' format.
+    :param duration: A string in 'H:MM' format.
+    :return: Tuple containing start time object and timedelta duration.
+    """
+    # Convert time
+    start_time_obj = datetime.strptime(start_time, "%I:%M %p").time()
+
+    # Convert duration to minutes
+    hours, minutes = map(int, duration.split(":"))
+    duration_delta = timedelta(hours=hours, minutes=minutes)
+
+    return start_time_obj, duration_delta
+
+# Function to export scheduled activities to an iCal file with start and end times
+def export_to_ical(activities: list, output_filename: str = "schedule.ics", timezone_str: str = "UTC"):
+    """
+    Exports the scheduled activities to an iCal file with start and end times and time zone.
+
+    :param activities: A list of scheduled activities.
+    :param output_filename: The filename for the iCal output.
+    :param timezone_str: Time zone string (e.g., 'America/New_York', 'UTC').
+    """
+    # Define the time zone for the events
+    tz = pytz.timezone(timezone_str)
+
+    base_filename = os.path.splitext(output_filename)[0]
+    output_path = get_unique_filename(base_filename)
+
+    calendar = Calendar()
+    
+    for activity in activities:
+        topic, location, activity_date, start_time, duration, entry_type, _ = activity
+
+        # If activity_date is already a datetime.date object, no need to convert
+        if isinstance(activity_date, str):
+            activity_date = datetime.strptime(activity_date, "%m/%d/%Y").date()
+
+        # Parse start time and duration
+        start_time_obj, duration_delta = parse_time_and_duration(start_time, duration)
+
+        # Combine date and start time into a full datetime object
+        start_datetime = datetime.combine(activity_date, start_time_obj)
+
+        # Localize start and end time to the specified timezone
+        # start_datetime = tz.localize(start_datetime)
+        end_datetime = start_datetime + duration_delta
+
+        # Create and set up the event
+        event = Event()
+        event.name = f"{entry_type}: {topic}"
+        event.begin = start_datetime
+        event.end = end_datetime
+        event.description = f"{entry_type}: {topic}"
+
+        # Include location if provided
+        if location:
+            event.location = location
+
+        # Set the DTSTAMP property to the current timestamp (with timezone)
+        event.created = datetime.now(tz)
+
+        # Add the event to the calendar
+        calendar.events.add(event)
+
+    # Save the calendar to the Output directory
+    with open(output_path, 'w') as ics_file:
+        ics_file.writelines(calendar)
+
+    print(f"✅ iCal file with start/end times and timezone exported successfully: {output_path}")
+
+# Example usage: Call this function after scheduling activities
+output_filename = os.path.basename(json_file_path).replace(".json", ".ics")
+timezone_str="America/Toronto"
+export_to_ical(scheduled_activities, output_filename, timezone_str)
