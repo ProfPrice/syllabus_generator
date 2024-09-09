@@ -11,6 +11,9 @@ import os
 from dateutil.easter import easter
 from prettytable import PrettyTable
 from ics import Calendar, Event
+import re
+import uuid
+from typing import List
 
 # region Helpers
 def print_warning(message):
@@ -37,6 +40,41 @@ def nth_weekday(n, weekday, month, year):
             day += 1
     return date(year, month, day)
 
+def quote_if_contains_colon(text: str) -> str:
+    """
+    Encloses the string in double quotes if it contains a colon.
+    """
+    return f'"{text}"' if ':' in text else text
+
+def quote_text_property(text: str) -> str:
+    """
+    Encloses the string in double quotes if it contains a colon.
+    """
+    return f'"{text}"'
+
+def sort_calendar_events(calendar: Calendar) -> Calendar:
+    """
+    Sorts the events in a Calendar object in ascending chronological order, 
+    while retaining the VTIMEZONE block.
+
+    Args:
+        calendar (Calendar): The Calendar object containing events and VTIMEZONE.
+
+    Returns:
+        Calendar: A new Calendar object with sorted events.
+    """
+    # Sort events by their start time (begin attribute)
+    sorted_events = sorted(calendar.events, key=lambda event: event.begin)
+    
+    # Create a new Calendar object with the same VTIMEZONE and sorted events
+    sorted_calendar = Calendar(events=sorted_events)
+    
+    # Retain any other components (like VTIMEZONE) from the original calendar
+    if calendar.extra:
+        sorted_calendar.extra = calendar.extra
+    
+    return sorted_calendar
+
 # endregion
 
 # region File loading and date processing
@@ -46,8 +84,11 @@ root.withdraw()  # Hide the main window
 default_dir = os.path.join(os.getcwd(), 'JSON')
 json_file_path = filedialog.askopenfilename(initialdir=default_dir, title="Select the JSON course data file", filetypes=[("JSON files", "*.json")]) """
 # Hardcoded relative file path
+input_filename_no_extension = "mme9624"
+# input_filename_no_extension = "es1050a"
+
 json_file_path = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "JSON", "mme9624.json"
+    os.path.dirname(os.path.abspath(__file__)), "JSON", input_filename_no_extension + ".json"
 )
 
 # Derive the output filename from the input JSON filename
@@ -126,7 +167,7 @@ if term_dates["term_start_date"] < one_month_ago:
 
 if term_dates["term_end_date"] < current_date:
     raise ValueError(
-        "The term end date is in the past. Please provide a valid future date."
+        f"The term end date is in the past ({term_dates['term_end_date']}). Please provide a valid future date."
     )
 
 if term_dates["reading_week_start"] < current_date:
@@ -228,11 +269,12 @@ while current_date <= term_dates["term_end_date"]:
                 start_time = lecture["start_time"]
                 duration = lecture["duration"]
                 location = lecture["location"]
-                topic = lecture_topics[lecture_topic_index]["Topic"]
+                topic = f"{lecture_entry_type} {(lecture_topic_index+1)}: {lecture_topics[lecture_topic_index]['Topic']}"
+                description = ""
                 scheduled_activities.append(
                     (
                         topic,
-                        "",
+                        description,
                         current_date,
                         start_time,
                         duration,
@@ -244,7 +286,6 @@ while current_date <= term_dates["term_end_date"]:
                 total_lecture_times += 1
                 lecture_topic_index += 1
                 
-
     # Schedule labs
     is_within_lab_window = (
         term_dates["lab_start_date"]
@@ -265,10 +306,11 @@ while current_date <= term_dates["term_end_date"]:
                 section = lab["section"]
                 topic = lab_topics[lab_topic_index[section]]["Topic"]
                 # Construct the full topic description with the section
-                topic_content = lab_topics[lab_topic_index[section]]["Topic"]
+                topic_content = f"{lab_entry_type} {(lab_topic_index[section]+1)}: {lab_topics[lab_topic_index[section]]['Topic']}"
                 reference_content = lab_topics[lab_topic_index[section]].get(
                     "Reference", ""
                 )
+                description = ""
 
                 # Construct the full topic description with the section
                 if reference_content:
@@ -292,7 +334,7 @@ while current_date <= term_dates["term_end_date"]:
                 scheduled_activities.append(
                     (
                         full_topic_description,
-                        "",
+                        description,
                         current_date,
                         start_time,
                         duration,
@@ -304,13 +346,11 @@ while current_date <= term_dates["term_end_date"]:
                 lab_topic_index[section] += 1
 
     # Schedule tutorials
-    is_within_tutorial_window = data["HasTutorials"] and (
+    if data["HasTutorials"] and (
         term_dates["tutorial_start_date"]
         <= current_date
         < term_dates["term_end_date"]
-    )
-
-    if data["HasTutorials"] and is_within_tutorial_window:
+    ):
         for tutorial in data[tutorial_entry_type]:
             if current_date.strftime("%A").upper() == tutorial[
                 "day_of_week"
@@ -321,14 +361,15 @@ while current_date <= term_dates["term_end_date"]:
                 section = tutorial["section"]
                 topic = tutorial_topics[tutorial_topic_index[section]]["Topic"]
                 # Construct the full topic description with the section
-                topic_content = tutorial_topics[tutorial_topic_index[section]]["Topic"]
+                topic_content = f"{tutorial_entry_type} {(tutorial_topic_index[section]+1)}: {tutorial_topics[tutorial_topic_index[section]]['Topic']}"
                 reference_content = tutorial_topics[tutorial_topic_index[section]].get(
                     "Reference", ""
                 )
+                description = ""
 
                 # Construct the full topic description with the section
                 if reference_content:
-                    if len(data[lab_entry_type])>1:
+                    if len(data[tutorial_entry_type])>1:
                         full_topic_description = (
                             f"{topic_content} [{reference_content}] (Section {section})"
                         )
@@ -337,7 +378,7 @@ while current_date <= term_dates["term_end_date"]:
                             f"{topic_content} [{reference_content}]"
                         )
                 else:
-                    if len(data[lab_entry_type])>1:
+                    if len(data[tutorial_entry_type])>1:
                         full_topic_description = (
                             f"{topic_content} (Section {section})"
                         )
@@ -348,7 +389,7 @@ while current_date <= term_dates["term_end_date"]:
                 scheduled_activities.append(
                     (
                         full_topic_description,
-                        "",
+                        description,
                         current_date,
                         start_time,
                         duration,
@@ -356,6 +397,9 @@ while current_date <= term_dates["term_end_date"]:
                         location
                     )
                 )
+                is_activity_scheduled = True
+                tutorial_topic_index[section] += 1
+
     # Alternate week delivery mode:
     if delivery_option == 'Alternating' and is_activity_scheduled:
         if lab_topic_index[lab["section"]] < len(lab_topics): # if there are unscheduled labs remaining
@@ -373,7 +417,7 @@ while current_date <= term_dates["term_end_date"]:
 with open(output_path, "w", newline="") as csvfile:
     output_csv = csv.writer(csvfile)
     output_csv.writerow(
-        ["Title", "Description", "Date", "Start", "Duration","Type","Location"]
+        ["Title", "Description", "Date", "Start", "Duration", "Type", "Location"]
     )
     for activity in scheduled_activities:
         # Convert the tuple to a list to modify its contents
@@ -388,6 +432,72 @@ with open(output_path, "w", newline="") as csvfile:
         # Write the modified activity to the CSV
         output_csv.writerow(activity_list)
 # endregion
+
+# Define the time zone for the events
+def create_calendar_event(activity, calendar, timezone_str='America/Toronto'):
+    tz = pytz.timezone(timezone_str)
+    
+    topic, description, activity_date, start_time, duration, _, location = activity
+        
+    # If activity_date is a string, convert to datetime
+    if isinstance(activity_date, str):
+        activity_date = datetime.strptime(activity_date, "%Y-%m-%d").date()
+    
+    # Parse start time and duration
+    start_time_dt = datetime.strptime(start_time, '%I:%M %p')
+    activity_start = datetime.combine(activity_date, start_time_dt.time())
+    
+    # Localize the start time to the correct timezone
+    localized_start = tz.localize(activity_start)
+    
+    # Convert to UTC for the iCal event
+    utc_start = localized_start.astimezone(pytz.utc)
+    
+    # Create calendar event
+    event = Event()
+    event.name = topic
+    event.begin = utc_start
+    event.duration = timedelta(hours=int(duration.split(':')[0]), minutes=int(duration.split(':')[1]))
+    event.location = location
+    if description:
+        event.description = description
+    event.created = datetime.now(tz)
+    event.classification = "PUBLIC"
+    event.categories = ["Teaching"]
+    event.sequence = 0
+    event.last_modified = datetime.now(tz)
+    event.uid = f"{uuid.uuid4()}"
+    calendar.events.add(event)
+    # print(f"Event added: {event.name} in {event.location}")
+    return calendar
+
+def validate_deliverable_date(name: str, dueDate: datetime.date):
+    if dueDate < term_dates["term_start_date"]:
+        raise ValueError(
+            f"The deliverable date ({dueDate}) occurs before the term start date. Please provide a valid date."
+        )
+
+    if dueDate > term_dates["term_end_date"]:
+        raise ValueError(
+            f"The deliverable date ({dueDate}) occurs after the term end date. Please provide a valid date."
+        )
+
+    is_within_reading_week = (
+        term_dates["reading_week_start"]
+        <= dueDate
+        < term_dates["reading_week_start"] + timedelta(days=5)
+    )
+    if is_within_reading_week:
+        raise ValueError(
+            "The deliverable date ({dueDate}) occurs during reading week. Please provide a valid date."
+        )
+
+    # Check if current_date is in the unavailable dates
+    is_unavailable_date = dueDate in unavailable_dates
+    if is_unavailable_date:
+        raise ValueError(
+            "The deliverable date ({dueDate}) occurs on an unavailable date. Please provide a valid date."
+        )
 
 # region Summary tables and validation checks
 # Display summary
@@ -405,6 +515,7 @@ for index, deliverable in enumerate(deliverables):
     name = deliverable["Name"]
     weight = f"{deliverable['Weight']}%"
     dueDate = deliverable["DueDate"]
+    validate_deliverable_date(name, datetime.strptime(dueDate, "%Y-%m-%d").date())
 
     # Check if it's the last iteration
     if index == len(deliverables) - 1:
@@ -517,10 +628,10 @@ def get_unique_filename(base_filename: str, extension: str = ".ics", output_dir:
     filename = f"{base_filename}{extension}"
     output_path = os.path.join(output_dir, filename)
     
-    while os.path.exists(output_path):
-        filename = f"{base_filename}_{counter}{extension}"
-        output_path = os.path.join(output_dir, filename)
-        counter += 1
+    # while os.path.exists(output_path):
+    #     filename = f"{base_filename}_{counter}{extension}"
+    #     output_path = os.path.join(output_dir, filename)
+    #     counter += 1
     
     return output_path
 
@@ -543,7 +654,7 @@ def parse_time_and_duration(start_time: str, duration: str):
     return start_time_obj, duration_delta
 
 # Function to export scheduled activities to an iCal file with start and end times
-def export_to_ical(activities: list, output_filename: str = "schedule.ics", timezone_str: str = "UTC"):
+def export_to_ical(activities: list, output_filename: str = "schedule.ics", timezone_str: str = "America/Toronto"):
     """
     Exports the scheduled activities to an iCal file with start and end times and time zone.
 
@@ -560,46 +671,75 @@ def export_to_ical(activities: list, output_filename: str = "schedule.ics", time
     calendar = Calendar()
     
     for activity in activities:
-        topic, location, activity_date, start_time, duration, entry_type, _ = activity
+        create_calendar_event(activity, calendar=calendar, timezone_str='America/Toronto')
 
-        # If activity_date is already a datetime.date object, no need to convert
-        if isinstance(activity_date, str):
-            activity_date = datetime.strptime(activity_date, "%m/%d/%Y").date()
-
-        # Parse start time and duration
-        start_time_obj, duration_delta = parse_time_and_duration(start_time, duration)
-
-        # Combine date and start time into a full datetime object
-        start_datetime = datetime.combine(activity_date, start_time_obj)
-
-        # Localize start and end time to the specified timezone
-        # start_datetime = tz.localize(start_datetime)
-        end_datetime = start_datetime + duration_delta
-
-        # Create and set up the event
-        event = Event()
-        event.name = f"{entry_type}: {topic}"
-        event.begin = start_datetime
-        event.end = end_datetime
-        event.description = f"{entry_type}: {topic}"
-
-        # Include location if provided
-        if location:
-            event.location = location
-
-        # Set the DTSTAMP property to the current timestamp (with timezone)
-        event.created = datetime.now(tz)
-
-        # Add the event to the calendar
-        calendar.events.add(event)
+    sorted_calendar = sort_calendar_events(calendar)
 
     # Save the calendar to the Output directory
     with open(output_path, 'w') as ics_file:
-        ics_file.writelines(calendar)
+        ics_file.write(sorted_calendar.serialize())  # Native ICS format output
 
     print(f"✅ iCal file with start/end times and timezone exported successfully: {output_path}")
 
-# Example usage: Call this function after scheduling activities
+def insert_string_at_line(original: str, to_insert: str, line_number: int = 4) -> str:
+    """
+    Inserts the `to_insert` string into the `original` string at the specified `line_number`.
+    
+    :param original: The original multi-line string.
+    :param to_insert: The multi-line string to be inserted.
+    :param line_number: The line number at which to insert the string. Defaults to 4.
+    :return: A new string with the inserted content.
+    """
+    # print(f"Inserting at line {line_number}")
+    # print(f"Text to insert:\n {to_insert}")
+    lines = original.splitlines()
+    lines.insert(line_number - 1, to_insert)
+    return "\r\n".join(lines)
+
+def add_vtimezone_block(ics_file_path: str, timezone_block: str):
+    """
+    Adds a VTIMEZONE block to the beginning of the iCal file.
+
+    :param ics_file_path: Path to the .ics file.
+    :param timezone_block: The VTIMEZONE block as a string.
+    """
+    with open(ics_file_path, 'r') as file:
+        content = file.read()
+
+    # Prepend the VTIMEZONE block
+    updated_content = re.sub(r'(?<!\r)\n', '\r\n', insert_string_at_line(content, timezone_block, 4))
+
+    with open(ics_file_path, 'w') as file:
+        file.write(updated_content)
+
+# iCal Header
+# ical_header = """
+# BEGIN:VCALENDAR
+# VERSION:2.0
+# PRODID:ics.py - http://git.io/lLljaA
+# """
+
+# Example VTIMEZONE block for America/Toronto
+vtimezone_block = """BEGIN:VTIMEZONE
+TZID:America/Toronto
+X-LIC-LOCATION:America/Toronto
+BEGIN:DAYLIGHT
+TZOFFSETFROM:-0500
+TZOFFSETTO:-0400
+TZNAME:EDT
+DTSTART:19700308T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:-0400
+TZOFFSETTO:-0500
+TZNAME:EST
+DTSTART:19701101T020000
+RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU
+END:STANDARD
+END:VTIMEZONE"""
+
 output_filename = os.path.basename(json_file_path).replace(".json", ".ics")
-timezone_str="America/Toronto"
-export_to_ical(scheduled_activities, output_filename, timezone_str)
+output_path = os.path.join("Output", output_filename)
+export_to_ical(scheduled_activities, output_filename, timezone_str="America/Toronto")
+add_vtimezone_block(output_path, vtimezone_block)

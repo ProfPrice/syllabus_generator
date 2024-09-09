@@ -1,0 +1,85 @@
+{
+    "Tutorial": [
+        {
+            "day_of_week": "FRIDAY",
+            "duration": "2:00",
+            "location": "ACEB 2440",
+            "section": "31",
+            "start_time": "2:30 PM"
+        }
+    ],
+    "Lecture": [
+    ],
+    "CourseCode": "ES 1050",
+    "Deliverables": [
+    ],
+    "DeliveryOption": "Conventional",
+    "HasLabs": false,
+    "HasTutorials": true,
+    "LabTopics": [
+    ],
+    "LectureTopics": [
+    ],
+    "TutorialTopics": [
+        {
+            "Reference": "",
+            "Topic": "A"
+        },
+        {
+            "Reference": "",
+            "Topic": "B"
+        },
+        {
+            "Reference": "",
+            "Topic": "C"
+        },
+        {
+            "Reference": "",
+            "Topic": "D"
+        },
+        {
+            "Reference": "",
+            "Topic": "E"
+        },
+        {
+            "Reference": "",
+            "Topic": "F"
+        },
+        {
+            "Reference": "",
+            "Topic": "G"
+        },
+        {
+            "Reference": "",
+            "Topic": "H"
+        },
+        {
+            "Reference": "",
+            "Topic": "I"
+        },
+        {
+            "Reference": "",
+            "Topic": "J"
+        },
+        {
+            "Reference": "",
+            "Topic": "K"
+        },
+        {
+            "Reference": "",
+            "Topic": "L"
+        },
+        {
+            "Reference": "",
+            "Topic": "M"
+        }
+    ],
+    "TermDates": {
+        "lab_start_date": "2024-09-16",
+        "reading_week_start": "2024-10-14",
+        "term_end_date": "2024-12-08",
+        "term_start_date": "2024-09-09",
+        "tutorial_start_date": "2024-09-09"
+    },
+    "UnavailableDates": []
+}
