@@ -470,7 +470,11 @@ deliverableTable.add_row(["TOTAL", f"{total_weight}%", ""])
 
 print(deliverableTable)
 
-with open("deliverables.csv", "w", newline="") as f_output:
+# Generate deliverables CSV filename and path
+deliverables_filename = os.path.basename(json_file_path).replace(".json", "_deliverables.csv")
+deliverables_path = os.path.join("Output", deliverables_filename)
+
+with open(deliverables_path, "w", newline="") as f_output:
     f_output.write(deliverableTable.get_string())
 
 # Check if total weight of deliverables is not 100%
